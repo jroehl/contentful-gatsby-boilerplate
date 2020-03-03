@@ -28,11 +28,6 @@ const init = ({ graphql, actions }) => {
     }
   };
 
-  const getPages = code =>
-    queryGraphql(getPages(code)).then(
-      ({ allContentfulPage }) => allContentfulPage.edges
-    );
-
   const enrichLocales = async (locales, contentful_id) => {
     const localized = await queryGraphql(
       getLocalizedPath(locales, contentful_id)
@@ -42,11 +37,11 @@ const init = ({ graphql, actions }) => {
       const code = removeHyphens(locale);
       const { path } = localized[code];
 
-      const defaultPath = getDefaultPath(REDIRECT_DEFAULT_PREFIX, path);
-      if (defaultPath && locale.default) {
+      if (locale.default) {
+        const defaultPath = getDefaultPath(REDIRECT_DEFAULT_PREFIX, path);
         return {
           ...red,
-          ['default']: defaultPath,
+          ['default']: defaultPath || path,
           [locale.code]: path,
         };
       }
@@ -60,7 +55,10 @@ const init = ({ graphql, actions }) => {
     ...actions,
     queryGraphql,
     createRedirect,
-    getPages,
+    getPages: code =>
+      queryGraphql(getPages(code)).then(
+        ({ allContentfulPage }) => allContentfulPage.edges
+      ),
     enrichLocales,
   };
 };

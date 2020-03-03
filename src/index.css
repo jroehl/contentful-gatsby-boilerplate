@@ -1,5 +1,8 @@
+:root {
+  --size-blockquote: 1rem;
+}
 article img {
-  max-width: 25%;
+  height: 10rem;
   align-self: center;
 }
 
@@ -10,4 +13,10 @@ article {
 
 main {
   padding: 2rem 10rem;
+}
+
+blockquote {
+  border-left: var(--size-blockquote) solid #eac8c8;
+  margin: calc(var(--size-blockquote) + 0.5rem) var(--size-blockquote);
+  padding: 0 var(--size-blockquote);
 }
