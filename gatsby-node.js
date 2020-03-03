@@ -1,8 +1,13 @@
+require('dotenv').config();
 const { resolve } = require('path');
 
-const { sanitizePath, Logger } = require('./gatsby/utils');
+const {
+  sanitizePath,
+  Logger,
+  writeRobots,
+  SitemapParser,
+} = require('./gatsby/utils');
 const initActions = require('./gatsby/actions');
-const { getPages, getLocalizedPath } = require('./gatsby/queries');
 const { getLocales } = require('./contentful/utils');
 
 const {
@@ -15,8 +20,12 @@ const env = BUILD_ENV || NODE_ENV;
 
 const pageTemplate = resolve(__dirname, 'src', 'templates', 'page.js');
 
+const sitemapParser = new SitemapParser(URL);
+
 exports.createPages = async props => {
-  const { queryGraphql, createRedirect, createPage } = initActions(props);
+  const { createRedirect, createPage, getPages, enrichLocales } = initActions(
+    props
+  );
 
   try {
     const locales = await getLocales();
@@ -24,9 +33,7 @@ exports.createPages = async props => {
 
     locales.forEach(async locale => {
       const { code, default: isDefaultLocale } = locale;
-      const {
-        allContentfulPage: { edges: pages },
-      } = await queryGraphql(getPages(code));
+      const pages = await getPages(code);
 
       Logger.log(
         `> Creating pages for "${code}" ${isDefaultLocale ? '<default>' : ''}`
@@ -37,14 +44,19 @@ exports.createPages = async props => {
           const sanitizedPath = sanitizePath(path);
           Logger.log(`>> Creating page ${sanitizedPath}`);
 
+          // Fetch the translations for the current path
+          const enrichedLocales = await enrichLocales(locales, contentful_id);
+
           if (hasMultipleLocales && isDefaultLocale) {
-            createRedirect(REDIRECT_DEFAULT_PREFIX, sanitizedPath);
+            await createRedirect(REDIRECT_DEFAULT_PREFIX, sanitizedPath);
           }
 
-          // Fetch the translations for the current path
-          const localizedPath = await queryGraphql(
-            getLocalizedPath(locales, contentful_id)
-          );
+          const localization = {
+            locales: enrichedLocales,
+            locale: enrichedLocales.find(({ code }) => code === locale.code),
+          };
+
+          sitemapParser.addURL(sanitizedPath, localization);
 
           await createPage({
             path: sanitizedPath,
@@ -55,11 +67,7 @@ exports.createPages = async props => {
                 domain: URL,
                 env,
                 metadata,
-                localization: {
-                  locales,
-                  locale,
-                  localizedPath,
-                },
+                localization,
               },
               data,
             },
@@ -69,6 +77,16 @@ exports.createPages = async props => {
     });
   } catch (error) {
     Logger.error(error);
+    process.exit(1);
+  }
+};
+
+exports.onPostBuild = async () => {
+  try {
+    sitemapParser.writeSitemap();
+    writeRobots(env);
+  } catch (err) {
+    console.error(err);
     process.exit(1);
   }
 };

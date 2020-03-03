@@ -1,3 +1,5 @@
+const { removeHyphens } = require('./utils');
+
 const getPages = locale => `
   query {
     allContentfulPage(filter: { node_locale: { eq: "${locale}" } }) {
@@ -62,14 +64,12 @@ const getPages = locale => `
     }
 `;
 
-const parseLocale = locale => locale.replace(/-/g, '');
-
 const getLocalizedPath = (locales, contentfulId) => `
   query {
     ${locales
-      .map(({ code }) => {
-        const locale = parseLocale(code);
-        return `${locale}: contentfulPage( contentful_id: {eq: "${contentfulId}"}, node_locale: {eq: "${code}"}) { path }`;
+      .map(locale => {
+        const parsedLocale = removeHyphens(locale);
+        return `${parsedLocale}: contentfulPage( contentful_id: {eq: "${contentfulId}"}, node_locale: {eq: "${locale.code}"}) { path }`;
       })
       .join('\n')}
   }
