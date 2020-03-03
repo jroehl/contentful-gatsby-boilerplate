@@ -10,6 +10,7 @@ const {
   CONTENTFUL_ENVIRONMENT: environment = 'master',
   CONTENTFUL_MANAGEMENT_TOKEN: accessToken,
   CONTENTFUL_ORGANIZATION_ID: organizationId,
+  URL,
 } = process.env;
 
 const init = async () => {
@@ -67,10 +68,10 @@ const init = async () => {
   const envLines = [
     '### Generated environment variables',
     'REDIRECT_DEFAULT_PREFIX="en"',
-    'URL="https://hinterland.software"',
+    !URL && 'URL="https://hinterland.software"',
     `CONTENTFUL_DELIVERY_TOKEN="${apiKey.accessToken}"`,
     `CONTENTFUL_SPACE_ID="${spaceId}"`,
-  ];
+  ].filter(Boolean);
 
   const envFile = resolve(__dirname, '..', '.env');
   if (existsSync(envFile)) {
