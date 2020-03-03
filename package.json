@@ -1,0 +1,38 @@
+{
+  "name": "contentful-gatsby-boilerplate",
+  "version": "1.0.0",
+  "description": "Set up boilerplate for simple gatsby-contentful website",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run develop",
+    "start:clean": "npm run clean && npm run start",
+    "initialize:contentful": "node contentful/initialize.js",
+    "clean": "rimraf .cache public",
+    "build": "npm run clean && npm run fetch-estates && gatsby build",
+    "develop": "gatsby develop -H 0.0.0.0",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "jroehl <mail@hinterland.software>",
+  "license": "MIT",
+  "dependencies": {
+    "@contentful/rich-text-react-renderer": "^13.4.0",
+    "@contentful/rich-text-types": "^14.1.0",
+    "contentful": "^7.14.0",
+    "contentful-management": "^5.13.0",
+    "dotenv": "^8.2.0",
+    "gatsby": "^2.19.25",
+    "gatsby-image": "^2.2.42",
+    "gatsby-plugin-react-helmet": "^3.1.22",
+    "gatsby-plugin-sharp": "^2.4.5",
+    "gatsby-source-contentful": "^2.1.89",
+    "gatsby-transformer-sharp": "^2.3.16",
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0",
+    "react-helmet": "^5.2.1",
+    "rimraf": "^3.0.2"
+  },
+  "browserslist": [
+    "defaults"
+  ]
+}
