@@ -36,7 +36,10 @@ const RichText = ({ className, json, config }) => {
   );
 };
 
-const localeShape = PropTypes.shape({ code: PropTypes.string.isRequired });
+const localeShape = PropTypes.shape({
+  code: PropTypes.string.isRequired,
+  localizedPaths: PropTypes.object.isRequired,
+});
 
 RichText.propTypes = {
   className: PropTypes.string,
@@ -45,7 +48,6 @@ RichText.propTypes = {
     localization: PropTypes.shape({
       locale: localeShape,
       locales: PropTypes.arrayOf(localeShape),
-      localizedPath: PropTypes.object,
     }).isRequired,
   }).isRequired,
 };

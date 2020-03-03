@@ -2,7 +2,7 @@ import React from 'react';
 import { navigate } from 'gatsby';
 import PropTypes from 'prop-types';
 
-import { renderRoutesRecursively, translate, parseLocale } from './utils';
+import { renderRoutesRecursively, translate } from './utils';
 import RichText from './RichText';
 
 import styles from './PageNavigation.module.css';
@@ -12,14 +12,13 @@ const PageNavigation = props => {
     pages,
     resources,
     config: {
-      localization: { locale, locales, localizedPath },
+      localization: { locale, locales },
     },
   } = props;
 
   const translateRoute = () => {
     const { code: nextLocale } = locales.find(loc => loc.code !== locale.code);
-    const parsedLocale = parseLocale(nextLocale);
-    navigate(localizedPath[parsedLocale].path);
+    navigate(locale.localizedPaths[nextLocale]);
   };
 
   const translateButton = translate(resources, 'navigation.translate');
@@ -33,7 +32,10 @@ const PageNavigation = props => {
   );
 };
 
-const localeShape = PropTypes.shape({ code: PropTypes.string.isRequired });
+const localeShape = PropTypes.shape({
+  code: PropTypes.string.isRequired,
+  localizedPaths: PropTypes.object.isRequired,
+});
 
 PageNavigation.propTypes = {
   pages: PropTypes.arrayOf(PropTypes.object).isRequired,
@@ -42,7 +44,6 @@ PageNavigation.propTypes = {
     localization: PropTypes.shape({
       locale: localeShape.isRequired,
       locales: PropTypes.arrayOf(localeShape).isRequired,
-      localizedPath: PropTypes.object.isRequired,
     }).isRequired,
   }).isRequired,
 };

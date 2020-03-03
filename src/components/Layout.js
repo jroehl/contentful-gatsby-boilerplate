@@ -62,13 +62,16 @@ const Layout = ({ children, config }) => {
   );
 };
 
+const localeShape = PropTypes.shape({
+  code: PropTypes.string.isRequired,
+  localizedPaths: PropTypes.object.isRequired,
+});
+
 Layout.propTypes = {
   config: PropTypes.shape({
     path: PropTypes.string.isRequired,
     localization: PropTypes.shape({
-      locale: PropTypes.shape({
-        code: PropTypes.string.isRequired,
-      }),
+      locale: localeShape,
     }).isRequired,
     env: PropTypes.string.isRequired,
     domain: PropTypes.string.isRequired,

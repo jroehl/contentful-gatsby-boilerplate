@@ -25,5 +25,3 @@ export const translate = (resources = [], key) => {
 
 export const resolveLocalized = (property, { code, fallbackCode }) =>
   property[code] || property[fallbackCode];
-
-export const parseLocale = locale => locale.replace(/-/g, '');
