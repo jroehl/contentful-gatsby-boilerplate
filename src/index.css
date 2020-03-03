@@ -1,0 +1,13 @@
+article img {
+  max-width: 25%;
+  align-self: center;
+}
+
+article {
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  padding: 2rem 10rem;
+}
