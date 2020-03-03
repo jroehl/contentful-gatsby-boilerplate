@@ -2,7 +2,7 @@ import React from 'react';
 import { navigate } from 'gatsby';
 import PropTypes from 'prop-types';
 
-import { renderRoutesRecursively, translate } from './utils';
+import { renderRoutesRecursively, translate } from '../utils';
 import RichText from './RichText';
 
 import styles from './PageNavigation.module.css';

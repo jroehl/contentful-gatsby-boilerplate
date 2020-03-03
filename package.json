@@ -17,6 +17,7 @@
   "author": "jroehl <mail@hinterland.software>",
   "license": "MIT",
   "dependencies": {
+    "@contentful/rich-text-from-markdown": "^13.4.0",
     "@contentful/rich-text-react-renderer": "^13.4.0",
     "@contentful/rich-text-types": "^14.1.0",
     "contentful": "^7.14.0",
