@@ -1,10 +1,9 @@
 require('dotenv').config();
+const open = require('open');
 const contentful = require('contentful-management');
 const contentfulImport = require('contentful-import');
 const { readFileSync, writeFileSync, existsSync } = require('fs');
 const { resolve } = require('path');
-
-const contentTypes = require('./data/content-types');
 
 const {
   CONTENTFUL_ENVIRONMENT: environment = 'master',
@@ -13,56 +12,38 @@ const {
   URL,
 } = process.env;
 
+const args = process.argv.slice(2).join(' ');
+const skipContent = args.includes('--skip-content');
+const skipLocales = args.includes('--skip-locales');
+
 const init = async () => {
   const client = contentful.createClient({ accessToken });
 
   const space = await client.createSpace({ name: 'Website' }, organizationId);
   const spaceId = space.sys.id;
   console.log(`Created space "${spaceId}"`);
-
-  const env = await space.getEnvironment(environment);
   console.log(`Using environment "${environment}"`);
 
-  const createContentTypeWithId = async id => {
-    const contentTypeData = contentTypes[id];
-    if (!contentTypeData)
-      throw new Error(`No contentType data found for <${id}>`);
+  (skipContent || skipLocales) &&
+    console.log(
+      `Skipping import of content ${skipLocales ? 'and locales' : ''}`
+    );
 
-    console.log(`Creating content-type "${contentTypeData.name}" <${id}>`);
-    const contentType = await env.createContentTypeWithId(id, contentTypeData);
-    await contentType.publish();
-    return contentType;
-  };
+  const contentFile = resolve(
+    __dirname,
+    'data',
+    'contentful-boilerplate-website.json'
+  );
 
-  await createContentTypeWithId('resource');
-  await createContentTypeWithId('page');
-  await createContentTypeWithId('pageMetadata');
-  await createContentTypeWithId('pageNavigation');
-  await createContentTypeWithId('pageContent');
-  await createContentTypeWithId('pageFooter');
-
-  await env.createLocale({
-    name: 'German (Germany)',
-    code: 'de-DE',
-    fallbackCode: 'en-US',
-    contentManagementApi: true,
-    contentDeliveryApi: true,
-    optional: false,
-  });
-
-  const options = {
-    contentFile: resolve(
-      __dirname,
-      'data',
-      'contentful-export-master-2020-03-03T12-32-32.json'
-    ),
-    skipContentModel: true,
+  console.log(`Setting up "${spaceId}"`);
+  await contentfulImport({
+    environmentId: environment,
+    contentFile,
+    contentModelOnly: skipContent || skipLocales,
+    skipLocales,
     spaceId,
     managementToken: accessToken,
-  };
-
-  console.log(`Importing content to "${spaceId}"`);
-  await contentfulImport(options);
+  });
 
   const apiKey = await space.createApiKey({ name: 'Gatsby' });
   const envLines = [
@@ -81,9 +62,11 @@ const init = async () => {
 
   console.log('Added environment variables to the .env file');
 
-  console.log(
-    `Set up space: https://app.contentful.com/spaces/${spaceId}/home`
-  );
+  const spaceHomeURL = `https://app.contentful.com/spaces/${spaceId}/home`;
+
+  console.log(`Set up space: ${spaceHomeURL}`);
+
+  await open(spaceHomeURL);
 };
 
 init().catch(console.error);

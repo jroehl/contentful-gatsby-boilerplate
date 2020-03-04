@@ -39,41 +39,41 @@ exports.createPages = async props => {
         `> Creating pages for "${code}" ${isDefaultLocale ? '<default>' : ''}`
       );
 
-      pages.forEach(
-        async ({ node: { metadata, path, contentful_id, ...data } }) => {
-          const sanitizedPath = sanitizePath(path);
-          Logger.log(`>> Creating page ${sanitizedPath}`);
+      pages.forEach(async ({ node: { path, ...node } }) => {
+        const sanitizedPath = sanitizePath(path);
+        Logger.log(`>> Creating page ${sanitizedPath}`);
 
-          // Fetch the translations for the current path
-          const enrichedLocales = await enrichLocales(locales, contentful_id);
+        // Fetch the translations for the current path
+        const enrichedLocales = await enrichLocales(
+          locales,
+          node.contentful_id
+        );
 
-          if (hasMultipleLocales && isDefaultLocale) {
-            await createRedirect(REDIRECT_DEFAULT_PREFIX, sanitizedPath);
-          }
-
-          const localization = {
-            locales: enrichedLocales,
-            locale: enrichedLocales.find(({ code }) => code === locale.code),
-          };
-
-          sitemapParser.addURL(sanitizedPath, localization);
-
-          await createPage({
-            path: sanitizedPath,
-            component: pageTemplate,
-            context: {
-              config: {
-                path: sanitizedPath,
-                domain: URL,
-                env,
-                metadata,
-                localization,
-              },
-              data,
-            },
-          });
+        if (hasMultipleLocales && isDefaultLocale) {
+          await createRedirect(REDIRECT_DEFAULT_PREFIX, sanitizedPath);
         }
-      );
+
+        const localization = {
+          locales: enrichedLocales,
+          locale: enrichedLocales.find(({ code }) => code === locale.code),
+        };
+
+        sitemapParser.addURL(sanitizedPath, localization);
+
+        await createPage({
+          path: sanitizedPath,
+          component: pageTemplate,
+          context: {
+            ...node,
+            config: {
+              path: sanitizedPath,
+              domain: URL,
+              env,
+              localization,
+            },
+          },
+        });
+      });
     });
   } catch (error) {
     Logger.error(error);

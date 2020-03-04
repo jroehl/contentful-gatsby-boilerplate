@@ -8,16 +8,16 @@ import RichText from './RichText';
 import styles from './PageNavigation.module.css';
 
 const PageNavigation = props => {
+  const { pages, resources, config } = props;
+
   const {
-    pages,
-    resources,
-    config: {
-      localization: { locale, locales },
-    },
-  } = props;
+    localization: { locale, locales },
+  } = config;
 
   const translateRoute = () => {
     const { code: nextLocale } = locales.find(loc => loc.code !== locale.code);
+    console.log(locales, locale);
+    console.log({ nextLocale, path: locale.localizedPaths[nextLocale] });
     navigate(locale.localizedPaths[nextLocale]);
   };
 
@@ -26,7 +26,10 @@ const PageNavigation = props => {
     <nav className={styles.nav}>
       <div>{renderRoutesRecursively(pages)}</div>
       <button onClick={translateRoute} className="button-primary">
-        <RichText json={translateButton && translateButton.json} />
+        <RichText
+          config={config}
+          json={translateButton && translateButton.json}
+        />
       </button>
     </nav>
   );

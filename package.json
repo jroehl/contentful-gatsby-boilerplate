@@ -30,6 +30,7 @@
     "gatsby-plugin-sharp": "^2.4.5",
     "gatsby-source-contentful": "^2.1.89",
     "gatsby-transformer-sharp": "^2.3.16",
+    "open": "^7.0.2",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "react-helmet": "^5.2.1",

@@ -89,3 +89,4 @@ legacy
 
 /public
 .contentfulrc.json
+/contentful-*.json

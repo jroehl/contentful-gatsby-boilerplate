@@ -23,5 +23,5 @@ export const translate = (resources = [], key) => {
   return null;
 };
 
-export const resolveLocalized = (property, { code, fallbackCode }) =>
+export const initLocalized = ({ code, fallbackCode } = {}) => property =>
   property[code] || property[fallbackCode];

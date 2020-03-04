@@ -1,0 +1,1146 @@
+{
+  "contentTypes": [
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "a7lxlrp123zx"
+          }
+        },
+        "id": "pageEstates",
+        "type": "ContentType",
+        "createdAt": "2020-03-04T13:05:47.216Z",
+        "updatedAt": "2020-03-04T13:05:50.823Z",
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        },
+        "publishedVersion": 1,
+        "publishedAt": "2020-03-04T13:05:50.823Z",
+        "firstPublishedAt": "2020-03-04T13:05:50.823Z",
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "4c7KTXqaAvJbDmWCbT4eJo"
+          }
+        },
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "4c7KTXqaAvJbDmWCbT4eJo"
+          }
+        },
+        "publishedCounter": 1,
+        "version": 2,
+        "publishedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "4c7KTXqaAvJbDmWCbT4eJo"
+          }
+        }
+      },
+      "displayField": "identifier",
+      "name": "Page > Estates",
+      "description": "An estates block of a page",
+      "fields": [
+        {
+          "id": "identifier",
+          "name": "Identifier",
+          "type": "Symbol",
+          "localized": false,
+          "required": true,
+          "validations": [
+            {
+              "unique": true
+            }
+          ],
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "type",
+          "name": "Type",
+          "type": "Symbol",
+          "localized": false,
+          "required": false,
+          "validations": [],
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "estates",
+          "name": "Estates",
+          "type": "Array",
+          "localized": false,
+          "required": false,
+          "validations": [],
+          "disabled": false,
+          "omitted": false,
+          "items": {
+            "type": "Link",
+            "validations": [
+              {
+                "linkContentType": ["estate"]
+              }
+            ],
+            "linkType": "Entry"
+          }
+        },
+        {
+          "id": "resources",
+          "name": "Resources",
+          "type": "Array",
+          "localized": false,
+          "required": false,
+          "validations": [],
+          "disabled": false,
+          "omitted": false,
+          "items": {
+            "type": "Link",
+            "validations": [
+              {
+                "linkContentType": ["resource"]
+              }
+            ],
+            "linkType": "Entry"
+          }
+        }
+      ]
+    },
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "a7lxlrp123zx"
+          }
+        },
+        "id": "estate",
+        "type": "ContentType",
+        "createdAt": "2020-03-04T13:05:47.229Z",
+        "updatedAt": "2020-03-04T13:05:51.992Z",
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        },
+        "publishedVersion": 1,
+        "publishedAt": "2020-03-04T13:05:51.992Z",
+        "firstPublishedAt": "2020-03-04T13:05:51.992Z",
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "4c7KTXqaAvJbDmWCbT4eJo"
+          }
+        },
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "4c7KTXqaAvJbDmWCbT4eJo"
+          }
+        },
+        "publishedCounter": 1,
+        "version": 2,
+        "publishedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "4c7KTXqaAvJbDmWCbT4eJo"
+          }
+        }
+      },
+      "displayField": "title",
+      "name": "Estate",
+      "description": "A real estate entity",
+      "fields": [
+        {
+          "id": "title",
+          "name": "Title",
+          "type": "Symbol",
+          "localized": true,
+          "required": true,
+          "validations": [
+            {
+              "unique": true
+            }
+          ],
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "archived",
+          "name": "Archived",
+          "type": "Boolean",
+          "localized": false,
+          "required": true,
+          "validations": [],
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "marketingType",
+          "name": "Marketing type",
+          "type": "Symbol",
+          "localized": false,
+          "required": true,
+          "validations": [
+            {
+              "in": ["Rent", "Purchase"]
+            }
+          ],
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "estateType",
+          "name": "Estate type",
+          "type": "Symbol",
+          "localized": true,
+          "required": true,
+          "validations": [],
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "price",
+          "name": "Price",
+          "type": "Symbol",
+          "localized": false,
+          "required": false,
+          "validations": [],
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "space",
+          "name": "Space",
+          "type": "Symbol",
+          "localized": false,
+          "required": false,
+          "validations": [],
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "url",
+          "name": "URL",
+          "type": "Symbol",
+          "localized": true,
+          "required": false,
+          "validations": [
+            {
+              "regexp": {
+                "pattern": "^((ftp|http|https):\\/)?\\/((\\w+:{0,1}\\w*@)?(\\S+)(:[0-9]+)?(\\/|\\/([\\w#!:.?+=&%@!\\-/]))?)?$"
+              },
+              "message": "Should be a relative or absolute URL"
+            }
+          ],
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "address",
+          "name": "Address",
+          "type": "RichText",
+          "localized": true,
+          "required": false,
+          "validations": [
+            {
+              "nodes": {
+                "entry-hyperlink": [
+                  {
+                    "linkContentType": ["callToAction"]
+                  }
+                ],
+                "embedded-entry-block": [
+                  {
+                    "linkContentType": ["callToAction"]
+                  }
+                ],
+                "embedded-entry-inline": [
+                  {
+                    "linkContentType": ["callToAction"]
+                  }
+                ]
+              }
+            }
+          ],
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "freeFormTexts",
+          "name": "Free-form texts",
+          "type": "Array",
+          "localized": false,
+          "required": false,
+          "validations": [],
+          "disabled": false,
+          "omitted": false,
+          "items": {
+            "type": "Link",
+            "validations": [
+              {
+                "linkContentType": ["estateResource"]
+              }
+            ],
+            "linkType": "Entry"
+          }
+        },
+        {
+          "id": "specifications",
+          "name": "Specifications",
+          "type": "Array",
+          "localized": false,
+          "required": false,
+          "validations": [],
+          "disabled": false,
+          "omitted": false,
+          "items": {
+            "type": "Link",
+            "validations": [
+              {
+                "linkContentType": ["estateResource"]
+              }
+            ],
+            "linkType": "Entry"
+          }
+        },
+        {
+          "id": "attachments",
+          "name": "Attachments",
+          "type": "Array",
+          "localized": false,
+          "required": true,
+          "validations": [],
+          "disabled": false,
+          "omitted": false,
+          "items": {
+            "type": "Link",
+            "validations": [
+              {
+                "linkMimetypeGroup": ["image", "video", "pdfdocument"]
+              }
+            ],
+            "linkType": "Asset"
+          }
+        }
+      ]
+    },
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "a7lxlrp123zx"
+          }
+        },
+        "id": "estateResource",
+        "type": "ContentType",
+        "createdAt": "2020-03-04T13:05:47.245Z",
+        "updatedAt": "2020-03-04T13:05:51.619Z",
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        },
+        "publishedVersion": 1,
+        "publishedAt": "2020-03-04T13:05:51.619Z",
+        "firstPublishedAt": "2020-03-04T13:05:51.619Z",
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "4c7KTXqaAvJbDmWCbT4eJo"
+          }
+        },
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "4c7KTXqaAvJbDmWCbT4eJo"
+          }
+        },
+        "publishedCounter": 1,
+        "version": 2,
+        "publishedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "4c7KTXqaAvJbDmWCbT4eJo"
+          }
+        }
+      },
+      "displayField": "key",
+      "name": "Estate > Resource",
+      "description": "A key-value estate resource",
+      "fields": [
+        {
+          "id": "key",
+          "name": "Key",
+          "type": "Symbol",
+          "localized": true,
+          "required": true,
+          "validations": [],
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "value",
+          "name": "Value",
+          "type": "RichText",
+          "localized": true,
+          "required": true,
+          "validations": [
+            {
+              "nodes": {
+                "entry-hyperlink": [
+                  {
+                    "linkContentType": ["callToAction"]
+                  }
+                ],
+                "embedded-entry-block": [
+                  {
+                    "linkContentType": ["callToAction"]
+                  }
+                ],
+                "embedded-entry-inline": [
+                  {
+                    "linkContentType": ["callToAction"]
+                  }
+                ]
+              }
+            }
+          ],
+          "disabled": false,
+          "omitted": false
+        }
+      ]
+    }
+  ],
+  "editorInterfaces": [
+    {
+      "sys": {
+        "id": "default",
+        "type": "EditorInterface",
+        "space": {
+          "sys": {
+            "id": "a7lxlrp123zx",
+            "type": "Link",
+            "linkType": "Space"
+          }
+        },
+        "version": 2,
+        "createdAt": "2020-03-04T13:05:50.886Z",
+        "createdBy": {
+          "sys": {
+            "id": "4c7KTXqaAvJbDmWCbT4eJo",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "updatedAt": "2020-03-04T13:05:52.726Z",
+        "updatedBy": {
+          "sys": {
+            "id": "4c7KTXqaAvJbDmWCbT4eJo",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "contentType": {
+          "sys": {
+            "id": "pageEstates",
+            "type": "Link",
+            "linkType": "ContentType"
+          }
+        },
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        }
+      },
+      "controls": [
+        {
+          "fieldId": "identifier",
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "type",
+          "settings": {
+            "helpText": "The type of the view"
+          },
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "estates",
+          "settings": {
+            "bulkEditing": false
+          },
+          "widgetId": "entryLinksEditor",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "resources",
+          "settings": {
+            "bulkEditing": false
+          },
+          "widgetId": "entryLinksEditor",
+          "widgetNamespace": "builtin"
+        }
+      ]
+    },
+    {
+      "sys": {
+        "id": "default",
+        "type": "EditorInterface",
+        "space": {
+          "sys": {
+            "id": "a7lxlrp123zx",
+            "type": "Link",
+            "linkType": "Space"
+          }
+        },
+        "version": 2,
+        "createdAt": "2020-03-04T13:05:52.064Z",
+        "createdBy": {
+          "sys": {
+            "id": "4c7KTXqaAvJbDmWCbT4eJo",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "updatedAt": "2020-03-04T13:05:52.739Z",
+        "updatedBy": {
+          "sys": {
+            "id": "4c7KTXqaAvJbDmWCbT4eJo",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "contentType": {
+          "sys": {
+            "id": "estate",
+            "type": "Link",
+            "linkType": "ContentType"
+          }
+        },
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        }
+      },
+      "controls": [
+        {
+          "fieldId": "title",
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "archived",
+          "settings": {
+            "helpText": "Is this estate marked as archived",
+            "trueLabel": "Yes",
+            "falseLabel": "No"
+          },
+          "widgetId": "boolean",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "marketingType",
+          "widgetId": "dropdown",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "estateType",
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "price",
+          "settings": {
+            "helpText": "Format should be \"<number> <currency>\" (e.g. \"1.000 €\")"
+          },
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "space",
+          "settings": {
+            "helpText": "Format should be \"<number> <type>\" (e.g. \"30 m²\")"
+          },
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "url",
+          "settings": {
+            "helpText": "An external or internal URL this estate is linked to"
+          },
+          "widgetId": "urlEditor",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "address",
+          "widgetId": "richTextEditor",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "freeFormTexts",
+          "settings": {
+            "bulkEditing": true
+          },
+          "widgetId": "entryCardsEditor",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "specifications",
+          "settings": {
+            "helpText": "Specifications shown as table",
+            "bulkEditing": true
+          },
+          "widgetId": "entryCardsEditor",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "attachments",
+          "settings": {
+            "helpText": "Sort order is left-to-right"
+          },
+          "widgetId": "assetGalleryEditor",
+          "widgetNamespace": "builtin"
+        }
+      ]
+    },
+    {
+      "sys": {
+        "id": "default",
+        "type": "EditorInterface",
+        "space": {
+          "sys": {
+            "id": "a7lxlrp123zx",
+            "type": "Link",
+            "linkType": "Space"
+          }
+        },
+        "version": 2,
+        "createdAt": "2020-03-04T13:05:51.683Z",
+        "createdBy": {
+          "sys": {
+            "id": "4c7KTXqaAvJbDmWCbT4eJo",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "updatedAt": "2020-03-04T13:05:52.727Z",
+        "updatedBy": {
+          "sys": {
+            "id": "4c7KTXqaAvJbDmWCbT4eJo",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "contentType": {
+          "sys": {
+            "id": "estateResource",
+            "type": "Link",
+            "linkType": "ContentType"
+          }
+        },
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        }
+      },
+      "controls": [
+        {
+          "fieldId": "key",
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "value",
+          "widgetId": "richTextEditor",
+          "widgetNamespace": "builtin"
+        }
+      ]
+    }
+  ],
+  "entries": [
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "a7lxlrp123zx"
+          }
+        },
+        "id": "3uyarSzMl3eyTth2caEBJF",
+        "type": "Entry",
+        "createdAt": "2020-03-04T13:06:01.565Z",
+        "updatedAt": "2020-03-04T13:07:04.159Z",
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        },
+        "publishedVersion": 2,
+        "publishedAt": "2020-03-04T13:07:04.159Z",
+        "firstPublishedAt": "2020-03-04T13:07:04.159Z",
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "4c7KTXqaAvJbDmWCbT4eJo"
+          }
+        },
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "4c7KTXqaAvJbDmWCbT4eJo"
+          }
+        },
+        "publishedCounter": 1,
+        "version": 3,
+        "publishedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "4c7KTXqaAvJbDmWCbT4eJo"
+          }
+        },
+        "contentType": {
+          "sys": {
+            "type": "Link",
+            "linkType": "ContentType",
+            "id": "pageEstates"
+          }
+        }
+      },
+      "fields": {
+        "identifier": {
+          "en-US": "[dummy] identifier"
+        },
+        "type": {
+          "en-US": "type"
+        },
+        "estates": {
+          "en-US": [
+            {
+              "sys": {
+                "type": "Link",
+                "linkType": "Entry",
+                "id": "182iGVpXM5dMdgarbHfLOk"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "a7lxlrp123zx"
+          }
+        },
+        "id": "182iGVpXM5dMdgarbHfLOk",
+        "type": "Entry",
+        "createdAt": "2020-03-04T13:06:03.324Z",
+        "updatedAt": "2020-03-04T13:06:48.211Z",
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        },
+        "publishedVersion": 3,
+        "publishedAt": "2020-03-04T13:06:48.211Z",
+        "firstPublishedAt": "2020-03-04T13:06:48.211Z",
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "4c7KTXqaAvJbDmWCbT4eJo"
+          }
+        },
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "4c7KTXqaAvJbDmWCbT4eJo"
+          }
+        },
+        "publishedCounter": 1,
+        "version": 4,
+        "publishedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "4c7KTXqaAvJbDmWCbT4eJo"
+          }
+        },
+        "contentType": {
+          "sys": {
+            "type": "Link",
+            "linkType": "ContentType",
+            "id": "estate"
+          }
+        }
+      },
+      "fields": {
+        "title": {
+          "en-US": "[dummy] title"
+        },
+        "archived": {
+          "en-US": true
+        },
+        "marketingType": {
+          "en-US": "Rent"
+        },
+        "estateType": {
+          "en-US": "estateType"
+        },
+        "price": {
+          "en-US": "1000 €"
+        },
+        "space": {
+          "en-US": "30 m²"
+        },
+        "url": {
+          "en-US": "https://hinterland.software"
+        },
+        "address": {
+          "en-US": {
+            "data": {},
+            "content": [
+              {
+                "data": {},
+                "content": [
+                  {
+                    "data": {},
+                    "marks": [],
+                    "value": "<street> <number>\n<postalcode> <city>\n<country>",
+                    "nodeType": "text"
+                  }
+                ],
+                "nodeType": "paragraph"
+              }
+            ],
+            "nodeType": "document"
+          }
+        },
+        "freeFormTexts": {
+          "en-US": [
+            {
+              "sys": {
+                "type": "Link",
+                "linkType": "Entry",
+                "id": "1j80y0cUJ4fwJCZKYUYguo"
+              }
+            }
+          ]
+        },
+        "specifications": {
+          "en-US": [
+            {
+              "sys": {
+                "type": "Link",
+                "linkType": "Entry",
+                "id": "1j80y0cUJ4fwJCZKYUYguo"
+              }
+            }
+          ]
+        },
+        "attachments": {
+          "en-US": [
+            {
+              "sys": {
+                "type": "Link",
+                "linkType": "Asset",
+                "id": "wgcXBjcJZmS6GWEcMsyKK"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "a7lxlrp123zx"
+          }
+        },
+        "id": "1j80y0cUJ4fwJCZKYUYguo",
+        "type": "Entry",
+        "createdAt": "2020-03-04T13:06:03.426Z",
+        "updatedAt": "2020-03-04T13:06:14.067Z",
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        },
+        "publishedVersion": 1,
+        "publishedAt": "2020-03-04T13:06:14.067Z",
+        "firstPublishedAt": "2020-03-04T13:06:14.067Z",
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "4c7KTXqaAvJbDmWCbT4eJo"
+          }
+        },
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "4c7KTXqaAvJbDmWCbT4eJo"
+          }
+        },
+        "publishedCounter": 1,
+        "version": 2,
+        "publishedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "4c7KTXqaAvJbDmWCbT4eJo"
+          }
+        },
+        "contentType": {
+          "sys": {
+            "type": "Link",
+            "linkType": "ContentType",
+            "id": "estateResource"
+          }
+        }
+      },
+      "fields": {
+        "key": {
+          "en-US": "[dummy] key"
+        },
+        "value": {
+          "en-US": {
+            "nodeType": "document",
+            "data": {},
+            "content": [
+              {
+                "nodeType": "paragraph",
+                "data": {},
+                "content": [
+                  {
+                    "nodeType": "text",
+                    "value": "value",
+                    "marks": [],
+                    "data": {}
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "assets": [
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "a7lxlrp123zx"
+          }
+        },
+        "id": "wgcXBjcJZmS6GWEcMsyKK",
+        "type": "Asset",
+        "createdAt": "2020-03-04T13:05:54.272Z",
+        "updatedAt": "2020-03-04T13:06:00.759Z",
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        },
+        "publishedVersion": 2,
+        "publishedAt": "2020-03-04T13:06:00.759Z",
+        "firstPublishedAt": "2020-03-04T13:06:00.759Z",
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "4c7KTXqaAvJbDmWCbT4eJo"
+          }
+        },
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "4c7KTXqaAvJbDmWCbT4eJo"
+          }
+        },
+        "publishedCounter": 1,
+        "version": 3,
+        "publishedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "4c7KTXqaAvJbDmWCbT4eJo"
+          }
+        }
+      },
+      "fields": {
+        "title": {
+          "en-US": "[dummy] title"
+        },
+        "description": {
+          "en-US": "description"
+        },
+        "file": {
+          "en-US": {
+            "url": "//source.unsplash.com/800x800?real-estate",
+            "details": {
+              "size": 84330,
+              "image": {
+                "width": 800,
+                "height": 800
+              }
+            },
+            "fileName": "random-unsplash.jpg",
+            "contentType": "image/jpeg"
+          }
+        }
+      }
+    }
+  ],
+  "locales": [
+    {
+      "name": "English (United States)",
+      "code": "en-US",
+      "fallbackCode": null,
+      "default": true,
+      "contentManagementApi": true,
+      "contentDeliveryApi": true,
+      "optional": false,
+      "sys": {
+        "type": "Locale",
+        "id": "0C5ny37uejTQDPyVT0sASk",
+        "version": 1,
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "a7lxlrp123zx"
+          }
+        },
+        "environment": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Environment",
+            "id": "master"
+          }
+        },
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "4c7KTXqaAvJbDmWCbT4eJo"
+          }
+        },
+        "createdAt": "2020-03-04T13:00:42Z",
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "4c7KTXqaAvJbDmWCbT4eJo"
+          }
+        },
+        "updatedAt": "2020-03-04T13:00:42Z"
+      }
+    },
+    {
+      "name": "German (Germany)",
+      "code": "de-DE",
+      "fallbackCode": "en-US",
+      "default": false,
+      "contentManagementApi": true,
+      "contentDeliveryApi": true,
+      "optional": true,
+      "sys": {
+        "type": "Locale",
+        "id": "67RM5qc6k8z4b6sMH2KJ5V",
+        "version": 1,
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "a7lxlrp123zx"
+          }
+        },
+        "environment": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Environment",
+            "id": "master"
+          }
+        },
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "4c7KTXqaAvJbDmWCbT4eJo"
+          }
+        },
+        "createdAt": "2020-03-04T13:05:46Z",
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "4c7KTXqaAvJbDmWCbT4eJo"
+          }
+        },
+        "updatedAt": "2020-03-04T13:05:46Z"
+      }
+    }
+  ],
+  "webhooks": [],
+  "roles": []
+}

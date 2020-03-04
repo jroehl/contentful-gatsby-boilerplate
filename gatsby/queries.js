@@ -8,56 +8,6 @@ const getPages = locale => `
             node_locale
             contentful_id
             path
-            metadata {
-              title
-              description
-            }
-            pageContent {
-              __typename
-              ... on ContentfulPageNavigation {
-                resources {
-                  key
-                  value {
-                    json
-                  }
-                }
-                pages {
-                  path
-                  title
-                  childPages {
-                    path
-                    title
-                  }
-                }
-              }
-              ... on ContentfulPageContent {
-                content {
-                  json
-                }
-                resources {
-                  key
-                  value {
-                    json
-                  }
-                }
-              }
-              ... on ContentfulPageFooter {
-                resources {
-                  key
-                  value {
-                    json
-                  }
-                }
-                pages {
-                  path
-                  title
-                  childPages {
-                    path
-                    title
-                  }
-                }
-              }
-            }
           }
         }
       }

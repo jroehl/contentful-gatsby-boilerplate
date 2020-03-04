@@ -2,13 +2,12 @@ import React, { useEffect, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 
-const Layout = ({ children, config }) => {
+const Layout = ({ children, config, metadata: { title, description } }) => {
   const {
     path,
     env,
     domain,
     localization: { locale },
-    metadata: { title, description },
   } = config;
   const isProduction = env === 'production';
 
@@ -68,6 +67,10 @@ const localeShape = PropTypes.shape({
 });
 
 Layout.propTypes = {
+  metadata: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+  }),
   config: PropTypes.shape({
     path: PropTypes.string.isRequired,
     localization: PropTypes.shape({
@@ -75,10 +78,6 @@ Layout.propTypes = {
     }).isRequired,
     env: PropTypes.string.isRequired,
     domain: PropTypes.string.isRequired,
-    metadata: PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      description: PropTypes.string.isRequired,
-    }),
   }).isRequired,
   children: PropTypes.node,
 };

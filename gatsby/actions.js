@@ -28,9 +28,9 @@ const init = ({ graphql, actions }) => {
     }
   };
 
-  const enrichLocales = async (locales, contentful_id) => {
+  const enrichLocales = async (locales, contentfulId) => {
     const localized = await queryGraphql(
-      getLocalizedPath(locales, contentful_id)
+      getLocalizedPath(locales, contentfulId)
     );
 
     const localizedPaths = locales.reduce((red, locale) => {
