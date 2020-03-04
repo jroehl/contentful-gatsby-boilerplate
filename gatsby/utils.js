@@ -1,10 +1,26 @@
 const { resolve } = require('path');
 const { mkdirSync, existsSync, writeFileSync } = require('fs');
+const slg = require('slug');
 
 const sanitizePath = path =>
   ['', ...path.split('/').filter(Boolean), ''].join('/');
 
 const removeHyphens = ({ code }) => code.replace(/-/g, '');
+
+const slug = string => {
+  return slg(string, {
+    lower: true, // lowercase everything
+    charmap: {
+      ä: 'ae',
+      ü: 'ue',
+      ö: 'oe',
+      ß: 'ss',
+      Ä: 'Ae',
+      Ü: 'Ue',
+      Ö: 'Oe',
+    },
+  });
+};
 
 class Logger {
   static log(...args) {
@@ -127,6 +143,7 @@ class SitemapParser {
 
 module.exports = {
   Logger,
+  slug,
   sanitizePath,
   getPublicDirIfNotExists,
   getDefaultPath,
