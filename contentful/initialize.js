@@ -1,13 +1,15 @@
 require('dotenv').config();
 const open = require('open');
-const contentful = require('contentful-management');
 const contentfulImport = require('contentful-import');
 const { readFileSync, writeFileSync, existsSync } = require('fs');
 const { resolve } = require('path');
+const {
+  createSpace,
+  credentials: { cmaToken },
+} = require('./utils');
 
 const {
   CONTENTFUL_ENVIRONMENT: environment = 'master',
-  CONTENTFUL_MANAGEMENT_TOKEN: accessToken,
   CONTENTFUL_ORGANIZATION_ID: organizationId,
   URL,
 } = process.env;
@@ -17,9 +19,7 @@ const skipContent = args.includes('--skip-content');
 const skipLocales = args.includes('--skip-locales');
 
 const init = async () => {
-  const client = contentful.createClient({ accessToken });
-
-  const space = await client.createSpace({ name: 'Website' }, organizationId);
+  const space = await createSpace(name, organizationId);
   const spaceId = space.sys.id;
   console.log(`Created space "${spaceId}"`);
   console.log(`Using environment "${environment}"`);
@@ -42,7 +42,7 @@ const init = async () => {
     contentModelOnly: skipContent || skipLocales,
     skipLocales,
     spaceId,
-    managementToken: accessToken,
+    managementToken: cmaToken,
   });
 
   const apiKey = await space.createApiKey({ name: 'Gatsby' });

@@ -16,11 +16,18 @@ const getFileName = url => {
   return basename(pathname);
 };
 
-const getId = (title, length = 64) => slug(title).substring(0, length);
+const genId = length => {
+  return [...Array(length)]
+    .map(() => (~~(Math.random() * 36)).toString(36))
+    .join('');
+};
+
+const getId = (identifier, length = 64) =>
+  slug(identifier).substring(0, length);
 
 const getEntrySys = (contentTypeId, identifier) => {
   return {
-    id: getId(`${contentTypeId}_${identifier}`),
+    id: identifier ? getId(`${contentTypeId}_${identifier}`) : genId(22),
     type: 'Entry',
     publishedVersion: 1,
     contentType: {
@@ -35,7 +42,7 @@ const getEntrySys = (contentTypeId, identifier) => {
 
 const getAssetSys = identifier => {
   return {
-    id: getId(`asset_${identifier}`),
+    id: identifier ? getId(`asset_${identifier}`) : genId(22),
     type: 'Asset',
     publishedVersion: 1,
   };
