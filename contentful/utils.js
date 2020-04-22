@@ -1,4 +1,3 @@
-require('dotenv').config();
 const contentful = require('contentful');
 const contentfulManagement = require('contentful-management');
 
@@ -10,31 +9,35 @@ const {
   CONTENTFUL_ORGANIZATION_ID: organizationId,
 } = process.env;
 
-const cdaClient = contentful.createClient({
-  space: spaceId,
-  environment,
-  accessToken: cdaAccessToken,
-});
+const getCmaClient = () =>
+  contentfulManagement.createClient({
+    accessToken: cmaAccessToken,
+  });
 
-const cmaClient = contentfulManagement.createClient({
-  accessToken: cmaAccessToken,
-});
+const getCdaClient = () =>
+  contentful.createClient({
+    space: spaceId,
+    environment,
+    accessToken: cdaAccessToken,
+  });
 
-const getLocales = () =>
-  cdaClient
+const getLocales = () => {
+  return getCdaClient()
     .getLocales()
     .then(({ items }) => items.map(({ sys, ...rest }) => rest));
+};
 
 const getEntry = async (...args) => {
-  const space = await cmaClient.getSpace(spaceId);
+  const space = await getCmaClient().getSpace(spaceId);
   const env = await space.getEnvironment(environment);
   return env.getEntry(...args);
 };
 
-const createSpace = name => cmaClient.createSpace({ name }, organizationId);
+const createSpace = (name) =>
+  getCmaClient().createSpace({ name }, organizationId);
 
-const createEnvironment = async name => {
-  const space = await cmaClient.getSpace(spaceId);
+const createEnvironment = async (name) => {
+  const space = await getCmaClient().getSpace(spaceId);
   return space.createEnvironment({ name }, organizationId);
 };
 
@@ -44,13 +47,13 @@ const cleanSpace = async ({
   withContentTypes,
   withAssets,
 }) => {
-  const space = await cmaClient.getSpace(spaceId);
+  const space = await getCmaClient().getSpace(spaceId);
   const env = await space.getEnvironment(environmentId);
   const entries = await env.getEntries();
 
-  const unpublishDelete = items => {
+  const unpublishDelete = (items) => {
     return Promise.all(
-      items.map(async item => {
+      items.map(async (item) => {
         try {
           await item.unpublish();
         } catch (error) {}
@@ -78,9 +81,8 @@ module.exports = {
   getEntry,
   createSpace,
   createEnvironment,
-  cmaClient,
-  cdaClient,
   cleanSpace,
+  getCdaClient,
   credentials: {
     environment,
     cmaToken: cmaAccessToken,
