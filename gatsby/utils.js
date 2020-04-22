@@ -2,12 +2,12 @@ const { resolve } = require('path');
 const { mkdirSync, existsSync, writeFileSync } = require('fs');
 const slg = require('slug');
 
-const sanitizePath = path =>
+const sanitizePath = (path) =>
   ['', ...path.split('/').filter(Boolean), ''].join('/');
 
 const removeHyphens = ({ code }) => code.replace(/-/g, '');
 
-const slug = string => {
+const slug = (string) => {
   return slg(string, {
     lower: true, // lowercase everything
     charmap: {
@@ -43,7 +43,7 @@ const getPublicDirIfNotExists = () => {
   return dir;
 };
 
-const writeRobots = env => {
+const writeRobots = (env) => {
   const publicDir = getPublicDirIfNotExists();
 
   const isProduction = env === 'production';
@@ -65,7 +65,7 @@ const getDefaultPath = (defaultPrefix, path) => {
 };
 
 class SitemapParser {
-  constructor(domain) {
+  constructor(domain = 'http://localhost') {
     this.urls = [];
     this.domain = domain.endsWith('/') ? domain : domain.slice(0, -1);
     this.publicDir = getPublicDirIfNotExists();
@@ -107,7 +107,7 @@ class SitemapParser {
 
   parseURLsToXML() {
     return this.urls
-      .map(url => {
+      .map((url) => {
         const parts = url
           .map(({ tag, children, attributes }) => {
             const attr = attributes ? ` ${attributes}` : '';
