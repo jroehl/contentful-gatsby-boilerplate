@@ -3,20 +3,18 @@ import PropTypes from 'prop-types';
 
 import Layout from './Layout';
 import PageContentRouter from './PageContentRouter';
-
-import '../index.css';
+import * as shapes from './proptypes';
 
 const Page = (props) => {
   const {
     data: { page },
     pageContext: { config },
-    location,
   } = props;
 
   const { pageContent, metadata, ...restData } = page;
 
   return (
-    <Layout config={config} metadata={metadata} location={location}>
+    <Layout config={config} metadata={metadata}>
       {pageContent.map(({ __typename, ...content }, i) => {
         return (
           <PageContentRouter
@@ -33,18 +31,9 @@ const Page = (props) => {
 };
 
 Page.propTypes = {
-  pageContext: PropTypes.shape({
-    config: PropTypes.object.isRequired,
-  }).isRequired,
-  location: PropTypes.object.isRequired,
+  pageContext: shapes.pageContext,
   data: PropTypes.shape({
-    page: PropTypes.shape({
-      pageContent: PropTypes.arrayOf(
-        PropTypes.shape({
-          __typename: PropTypes.string.isRequired,
-        })
-      ).isRequired,
-    }).isRequired,
+    page: shapes.page.isRequired,
   }),
 };
 

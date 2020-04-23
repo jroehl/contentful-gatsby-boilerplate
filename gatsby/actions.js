@@ -1,11 +1,11 @@
 require('dotenv').config();
-const { Logger, removeHyphens, getDefaultPath } = require('./utils');
+const { Logger, getDefaultPath, enrichLocales } = require('../shared/utils');
 const { getPages, getLocalizedPath } = require('./queries');
 
 const { REDIRECT_DEFAULT_PREFIX } = process.env;
 
 const init = ({ graphql, actions }) => {
-  const queryGraphql = async graphqlString => {
+  const queryGraphql = async (graphqlString) => {
     const { errors, data } = await graphql(graphqlString);
     if (errors) throw Error(errors.join('\n'));
     return data;
@@ -28,38 +28,20 @@ const init = ({ graphql, actions }) => {
     }
   };
 
-  const enrichLocales = async (locales, contentfulId) => {
-    const localized = await queryGraphql(
-      getLocalizedPath(locales, contentfulId)
-    );
-
-    const localizedPaths = locales.reduce((red, locale) => {
-      const code = removeHyphens(locale);
-      const { path } = localized[code];
-
-      if (locale.default) {
-        const defaultPath = getDefaultPath(REDIRECT_DEFAULT_PREFIX, path);
-        return {
-          ...red,
-          ['default']: defaultPath || path,
-          [locale.code]: path,
-        };
-      }
-
-      return { ...red, [locale.code]: path };
-    }, {});
-    return locales.map(locale => ({ ...locale, localizedPaths }));
-  };
-
   return {
     ...actions,
     queryGraphql,
     createRedirect,
-    getPages: code =>
+    getPages: (code) =>
       queryGraphql(getPages(code)).then(
         ({ allContentfulPage }) => allContentfulPage.edges
       ),
-    enrichLocales,
+    enrichLocales: async (locales, contentfulId) => {
+      const localized = await queryGraphql(
+        getLocalizedPath(locales, contentfulId)
+      );
+      return enrichLocales(locales, localized, REDIRECT_DEFAULT_PREFIX);
+    },
   };
 };
 

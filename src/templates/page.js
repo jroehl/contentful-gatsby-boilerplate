@@ -1,5 +1,12 @@
+import React from 'react';
 import { graphql } from 'gatsby';
-export { default } from '../components/Page';
+import Page from '../components/Page';
+
+import '../index.css';
+
+const GatsbyAdapter = (props) => <Page {...props} />;
+
+export default GatsbyAdapter;
 
 export const query = graphql`
   query($contentful_id: String, $node_locale: String) {

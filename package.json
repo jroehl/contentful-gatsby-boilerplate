@@ -6,11 +6,14 @@
   "scripts": {
     "start": "npm run develop",
     "start:clean": "npm run clean && npm run start",
+    "start:preview": "next start ./src/preview",
     "contentful:initialize": "node contentful/initialize.js",
     "contentful:tear-down": "node contentful/tear-down.js",
     "clean": "rimraf .cache public",
     "build": "npm run clean && gatsby build",
+    "build:preview": "next build ./src/preview",
     "develop": "gatsby develop -H 0.0.0.0",
+    "develop:preview": "next dev ./src/preview",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -31,12 +34,16 @@
     "gatsby-plugin-sharp": "^2.4.5",
     "gatsby-source-contentful": "^2.1.89",
     "gatsby-transformer-sharp": "^2.3.16",
+    "next": "^9.3.5",
+    "next-compose-plugins": "^2.2.0",
+    "next-transpile-modules": "^3.2.0",
     "open": "^7.0.2",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "react-helmet": "^5.2.1",
     "rimraf": "^3.0.2",
-    "slug": "^2.1.1"
+    "slug": "^2.1.1",
+    "traverse": "^0.6.6"
   },
   "browserslist": [
     "defaults"

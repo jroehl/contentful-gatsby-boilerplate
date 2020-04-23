@@ -1,12 +1,8 @@
 require('dotenv').config();
 const { resolve } = require('path');
 
-const {
-  sanitizePath,
-  Logger,
-  writeRobots,
-  SitemapParser,
-} = require('./gatsby/utils');
+const { sanitizePath, Logger } = require('./shared/utils');
+const { writeRobots, SitemapParser } = require('./gatsby/utils');
 const initActions = require('./gatsby/actions');
 const { getLocales } = require('./contentful/utils');
 
@@ -16,13 +12,14 @@ const {
   URL,
   REDIRECT_DEFAULT_PREFIX,
 } = process.env;
+
 const env = BUILD_ENV || NODE_ENV;
 
 const pageTemplate = resolve(__dirname, 'src', 'templates', 'page.js');
 
 const sitemapParser = new SitemapParser(URL);
 
-exports.createPages = async props => {
+exports.createPages = async (props) => {
   const { createRedirect, createPage, getPages, enrichLocales } = initActions(
     props
   );
@@ -31,7 +28,7 @@ exports.createPages = async props => {
     const locales = await getLocales();
     const hasMultipleLocales = locales.length > 1;
 
-    locales.forEach(async locale => {
+    locales.forEach(async (locale) => {
       const { code, default: isDefaultLocale } = locale;
       const pages = await getPages(code);
 
@@ -89,4 +86,14 @@ exports.onPostBuild = async () => {
     console.error(err);
     process.exit(1);
   }
+};
+
+exports.onCreateWebpackConfig = ({ actions }) => {
+  actions.setWebpackConfig({
+    resolve: {
+      alias: {
+        'framework-adapter': resolve(__dirname, 'src', 'adapter', 'gatsby.js'),
+      },
+    },
+  });
 };

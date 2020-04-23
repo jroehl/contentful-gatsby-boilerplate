@@ -1,68 +1,6 @@
 const { resolve } = require('path');
-const { mkdirSync, existsSync, writeFileSync } = require('fs');
-const slg = require('slug');
-
-const sanitizePath = (path) =>
-  ['', ...path.split('/').filter(Boolean), ''].join('/');
-
-const removeHyphens = ({ code }) => code.replace(/-/g, '');
-
-const slug = (string) => {
-  return slg(string, {
-    lower: true, // lowercase everything
-    charmap: {
-      ä: 'ae',
-      ü: 'ue',
-      ö: 'oe',
-      ß: 'ss',
-      Ä: 'Ae',
-      Ü: 'Ue',
-      Ö: 'Oe',
-    },
-  });
-};
-
-class Logger {
-  static log(...args) {
-    console.log(...args);
-  }
-  static warn(...args) {
-    console.warn(...args);
-  }
-  static info(...args) {
-    console.info(...args);
-  }
-  static error(...args) {
-    console.error(...args);
-  }
-}
-
-const getPublicDirIfNotExists = () => {
-  const dir = resolve(__dirname, '..', 'public');
-  if (!existsSync(dir)) mkdirSync(dir);
-  return dir;
-};
-
-const writeRobots = (env) => {
-  const publicDir = getPublicDirIfNotExists();
-
-  const isProduction = env === 'production';
-  const robots = isProduction
-    ? 'User-agent: *\nAllow: /'
-    : 'User-agent: *\nDisallow: /';
-
-  Logger.log(`Writing "${env}" public/robots.txt`);
-
-  writeFileSync(resolve(publicDir, 'robots.txt'), robots);
-};
-
-const getDefaultPath = (defaultPrefix, path) => {
-  const sanitizedPath = sanitizePath(path);
-  const sanitizedPrefix = `/${defaultPrefix}/`;
-  if (defaultPrefix && sanitizedPath.includes(sanitizedPrefix)) {
-    return sanitizePath(sanitizedPath.replace(sanitizedPrefix, ''));
-  }
-};
+const { writeFileSync, existsSync, mkdirSync } = require('fs');
+const { Logger, sanitizePath } = require('../shared/utils');
 
 class SitemapParser {
   constructor(domain = 'http://localhost') {
@@ -141,13 +79,24 @@ class SitemapParser {
   }
 }
 
+const getPublicDirIfNotExists = () => {
+  const dir = resolve(__dirname, '..', 'public');
+  if (!existsSync(dir)) mkdirSync(dir);
+  return dir;
+};
+
+const writeRobots = (env) => {
+  const publicDir = getPublicDirIfNotExists();
+  const isProduction = env === 'production';
+  const robots = isProduction
+    ? 'User-agent: *\nAllow: /'
+    : 'User-agent: *\nDisallow: /';
+  Logger.log(`Writing "${env}" public/robots.txt`);
+  writeFileSync(resolve(publicDir, 'robots.txt'), robots);
+};
+
 module.exports = {
-  Logger,
-  slug,
-  sanitizePath,
   getPublicDirIfNotExists,
-  getDefaultPath,
   writeRobots,
-  removeHyphens,
   SitemapParser,
 };

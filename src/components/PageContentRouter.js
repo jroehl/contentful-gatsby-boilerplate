@@ -5,7 +5,7 @@ import PageNavigation from './PageNavigation';
 import PageContent from './PageContent';
 import PageFooter from './PageFooter';
 
-const PageContentRouter = props => {
+const PageContentRouter = (props) => {
   const { typename } = props;
   switch (typename) {
     case 'ContentfulPageNavigation':
@@ -23,9 +23,21 @@ const PageContentRouter = props => {
   }
 };
 
-PageContentRouter.propTypes = {
-  typename: PropTypes.string.isRequired,
-};
+const commonPropTypes = { typename: PropTypes.string };
+PageContentRouter.propTypes = PropTypes.oneOfType([
+  PropTypes.shape({
+    ...commonPropTypes,
+    ...PageNavigation.propTypes,
+  }),
+  PropTypes.shape({
+    ...commonPropTypes,
+    ...PageContent.propTypes,
+  }),
+  PropTypes.shape({
+    ...commonPropTypes,
+    ...PageFooter.propTypes,
+  }),
+]).isRequired;
 
 PageContentRouter.defaultProps = {
   typename: '<undefined>',
