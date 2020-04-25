@@ -1,37 +1,74 @@
-require('dotenv').config();
 const { resolve } = require('path');
 
 const {
   sanitizePath,
   Logger,
-  writeRobots,
-  SitemapParser,
+  getBuildEnvironment,
+  getContentfulEnvironment,
 } = require('./gatsby/utils');
-const initActions = require('./gatsby/actions');
+const { writeRobots, SitemapParser } = require('./gatsby/build-utils');
+const initActions = require('./gatsby/static/actions');
 const { getLocales } = require('./contentful/utils');
 
-const {
-  BUILD_ENV,
-  NODE_ENV = 'development',
-  URL,
-  REDIRECT_DEFAULT_PREFIX,
-} = process.env;
-const env = BUILD_ENV || NODE_ENV;
+const buildEnvironment = getBuildEnvironment();
+const { env, domain, redirectDefaultPrefix } = buildEnvironment;
 
-const pageTemplate = resolve(__dirname, 'src', 'templates', 'page.js');
+const sitemapParser = new SitemapParser(domain);
 
-const sitemapParser = new SitemapParser(URL);
+const buildDynamic = async ({ actions }) => {
+  const pageTemplate = resolve(
+    __dirname,
+    'gatsby',
+    'dynamic',
+    'templates',
+    'page.js'
+  );
 
-exports.createPages = async props => {
+  const { previewToken, spaceId, environment } = getContentfulEnvironment();
+
+  try {
+    sitemapParser.addURL('/');
+
+    await actions.createPage({
+      path: '/',
+      component: pageTemplate,
+      matchPath: '/*',
+      context: {
+        env: {
+          build: buildEnvironment,
+          contentful: {
+            previewToken,
+            spaceId,
+            environment,
+          },
+        },
+      },
+    });
+  } catch (error) {
+    Logger.error(error);
+    process.exit(1);
+  }
+};
+
+const buildStatic = async (props) => {
+  const pageTemplate = resolve(
+    __dirname,
+    'gatsby',
+    'static',
+    'templates',
+    'page.js'
+  );
+
   const { createRedirect, createPage, getPages, enrichLocales } = initActions(
-    props
+    props,
+    redirectDefaultPrefix
   );
 
   try {
     const locales = await getLocales();
     const hasMultipleLocales = locales.length > 1;
 
-    locales.forEach(async locale => {
+    locales.forEach(async (locale) => {
       const { code, default: isDefaultLocale } = locale;
       const pages = await getPages(code);
 
@@ -50,7 +87,7 @@ exports.createPages = async props => {
         );
 
         if (hasMultipleLocales && isDefaultLocale) {
-          await createRedirect(REDIRECT_DEFAULT_PREFIX, sanitizedPath);
+          await createRedirect(sanitizedPath);
         }
 
         const localization = {
@@ -67,7 +104,7 @@ exports.createPages = async props => {
             ...node,
             config: {
               path: sanitizedPath,
-              domain: URL,
+              domain,
               env,
               localization,
             },
@@ -80,6 +117,8 @@ exports.createPages = async props => {
     process.exit(1);
   }
 };
+
+exports.createPages = env === 'preview' ? buildDynamic : buildStatic;
 
 exports.onPostBuild = async () => {
   try {

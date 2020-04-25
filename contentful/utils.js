@@ -1,40 +1,68 @@
-require('dotenv').config();
 const contentful = require('contentful');
 const contentfulManagement = require('contentful-management');
+const { Logger, getContentfulEnvironment } = require('../gatsby/utils');
 
 const {
-  CONTENTFUL_SPACE_ID: spaceId,
-  CONTENTFUL_ENVIRONMENT: environment = 'master',
-  CONTENTFUL_DELIVERY_TOKEN: cdaAccessToken,
-  CONTENTFUL_MANAGEMENT_TOKEN: cmaAccessToken,
-  CONTENTFUL_ORGANIZATION_ID: organizationId,
-} = process.env;
-
-const cdaClient = contentful.createClient({
-  space: spaceId,
+  spaceId,
   environment,
-  accessToken: cdaAccessToken,
-});
+  deliveryToken,
+  managementToken,
+  previewToken,
+  organizationId,
+} = getContentfulEnvironment();
 
-const cmaClient = contentfulManagement.createClient({
-  accessToken: cmaAccessToken,
-});
+const log = (type) => {
+  Logger.log(
+    `Creating Contentful <${type}> API client for space "${spaceId}" (${environment})`
+  );
+};
 
-const getLocales = () =>
-  cdaClient
+const getCmaClient = (creds = {}) => {
+  log('management');
+  return contentfulManagement.createClient({
+    accessToken: managementToken,
+    ...creds,
+  });
+};
+
+const getCdaClient = (creds = {}) => {
+  log('delivery');
+  return contentful.createClient({
+    space: spaceId,
+    environment,
+    accessToken: deliveryToken,
+    ...creds,
+  });
+};
+
+const getPreviewClient = (creds = {}) => {
+  log('preview');
+  return contentful.createClient({
+    space: spaceId,
+    environment,
+    accessToken: previewToken,
+    host: 'preview.contentful.com',
+    ...creds,
+  });
+};
+
+const getLocales = (creds) => {
+  return getCdaClient(creds)
     .getLocales()
     .then(({ items }) => items.map(({ sys, ...rest }) => rest));
+};
 
 const getEntry = async (...args) => {
-  const space = await cmaClient.getSpace(spaceId);
+  const space = await getCmaClient().getSpace(spaceId);
   const env = await space.getEnvironment(environment);
   return env.getEntry(...args);
 };
 
-const createSpace = name => cmaClient.createSpace({ name }, organizationId);
+const createSpace = (name) =>
+  getCmaClient().createSpace({ name }, organizationId);
 
-const createEnvironment = async name => {
-  const space = await cmaClient.getSpace(spaceId);
+const createEnvironment = async (name) => {
+  const space = await getCmaClient().getSpace(spaceId);
   return space.createEnvironment({ name }, organizationId);
 };
 
@@ -44,13 +72,13 @@ const cleanSpace = async ({
   withContentTypes,
   withAssets,
 }) => {
-  const space = await cmaClient.getSpace(spaceId);
+  const space = await getCmaClient().getSpace(spaceId);
   const env = await space.getEnvironment(environmentId);
   const entries = await env.getEntries();
 
-  const unpublishDelete = items => {
+  const unpublishDelete = (items) => {
     return Promise.all(
-      items.map(async item => {
+      items.map(async (item) => {
         try {
           await item.unpublish();
         } catch (error) {}
@@ -59,15 +87,15 @@ const cleanSpace = async ({
     );
   };
 
-  console.log('Deleting entries');
+  Logger.log('Deleting entries');
   await unpublishDelete(entries.items);
   if (withContentTypes) {
-    console.log('Deleting contentTypes');
+    Logger.log('Deleting contentTypes');
     const contentTypes = await env.getContentTypes();
     await unpublishDelete(contentTypes.items);
   }
   if (withAssets) {
-    console.log('Deleting assets');
+    Logger.log('Deleting assets');
     const assets = await env.getAssets();
     await unpublishDelete(assets.items);
   }
@@ -78,12 +106,13 @@ module.exports = {
   getEntry,
   createSpace,
   createEnvironment,
-  cmaClient,
-  cdaClient,
   cleanSpace,
+  getCdaClient,
+  getCmaClient,
+  getPreviewClient,
   credentials: {
     environment,
-    cmaToken: cmaAccessToken,
-    cdaToken: cdaAccessToken,
+    cmaToken: managementToken,
+    cdaToken: deliveryToken,
   },
 };

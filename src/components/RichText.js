@@ -4,20 +4,21 @@ import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { BLOCKS } from '@contentful/rich-text-types';
 
 import { mergeClassNames, initLocalized } from '../utils';
+import * as shapes from './proptypes';
 
 const initOptions = ({ localization: { locale } }) => {
   const resolve = initLocalized(locale);
   return {
     renderNode: {
       [BLOCKS.EMBEDDED_ENTRY]: (node, children) => {
-        const { label } = node.data.target.fields;
+        const { label } = node?.data?.target?.fields;
         const lbl = resolve(label);
 
         return lbl;
       },
       [BLOCKS.EMBEDDED_ASSET]: (node, children) => {
         if (!locale) return;
-        const { description, file, title } = node.data.target.fields;
+        const { description, file, title } = node?.data?.target?.fields;
 
         const { contentType, url } = resolve(file);
         if (url && contentType.includes('image')) {
@@ -43,20 +44,10 @@ const RichText = ({ className, json, config }) => {
   );
 };
 
-const localeShape = PropTypes.shape({
-  code: PropTypes.string.isRequired,
-  localizedPaths: PropTypes.object.isRequired,
-});
-
 RichText.propTypes = {
   className: PropTypes.string,
-  json: PropTypes.object,
-  config: PropTypes.shape({
-    localization: PropTypes.shape({
-      locale: localeShape,
-      locales: PropTypes.arrayOf(localeShape),
-    }).isRequired,
-  }).isRequired,
+  json: shapes.richText,
+  config: shapes.config.isRequired,
 };
 
 RichText.defaultProps = {

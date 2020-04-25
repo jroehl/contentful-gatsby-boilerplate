@@ -1,13 +1,13 @@
 import React from 'react';
 import { navigate } from 'gatsby';
-import PropTypes from 'prop-types';
 
 import { renderRoutesRecursively, translate } from '../utils';
 import RichText from './RichText';
+import * as shapes from './proptypes';
 
 import styles from './PageNavigation.module.css';
 
-const PageNavigation = props => {
+const PageNavigation = (props) => {
   const { pages, resources, config } = props;
 
   const {
@@ -15,7 +15,13 @@ const PageNavigation = props => {
   } = config;
 
   const translateRoute = () => {
-    const { code: nextLocale } = locales.find(loc => loc.code !== locale.code);
+    if (locales.length <= 1) {
+      alert('No additional locale defined in Contentful');
+      return;
+    }
+    const { code: nextLocale } = locales.find(
+      (loc) => loc.code !== locale.code
+    );
     console.log(locales, locale);
     console.log({ nextLocale, path: locale.localizedPaths[nextLocale] });
     navigate(locale.localizedPaths[nextLocale]);
@@ -35,20 +41,10 @@ const PageNavigation = props => {
   );
 };
 
-const localeShape = PropTypes.shape({
-  code: PropTypes.string.isRequired,
-  localizedPaths: PropTypes.object.isRequired,
-});
-
 PageNavigation.propTypes = {
-  pages: PropTypes.arrayOf(PropTypes.object).isRequired,
-  resources: PropTypes.arrayOf(PropTypes.object).isRequired,
-  config: PropTypes.shape({
-    localization: PropTypes.shape({
-      locale: localeShape.isRequired,
-      locales: PropTypes.arrayOf(localeShape).isRequired,
-    }).isRequired,
-  }).isRequired,
+  pages: shapes.pages.isRequired,
+  resources: shapes.resources,
+  config: shapes.config,
 };
 
 PageNavigation.defaultProps = {};

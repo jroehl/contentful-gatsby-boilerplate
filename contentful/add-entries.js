@@ -1,17 +1,13 @@
-require('dotenv').config();
 const contentful = require('contentful-management');
 const { readFileSync } = require('fs');
+const { getContentfulEnvironment } = require('../shared/utils');
 
-const {
-  CONTENTFUL_ENVIRONMENT: environment = 'master',
-  CONTENTFUL_MANAGEMENT_TOKEN: accessToken,
-  CONTENTFUL_SPACE_ID: spaceId,
-} = process.env;
+const { environment, spaceId, managementToken } = getContentfulEnvironment();
 
 const [contentTypeId, filePath] = process.argv.slice(2);
 
 const init = async () => {
-  const client = contentful.createClient({ accessToken });
+  const client = contentful.createClient({ accessToken: managementToken });
   console.log(`Reading data from ${filePath}`);
 
   const space = await client.getSpace(spaceId);
@@ -21,7 +17,7 @@ const init = async () => {
 
   console.log(`Processing ${data.length} entrie${data.length > 1 ? 's' : ''}`);
 
-  data.forEach(async fields => {
+  data.forEach(async (fields) => {
     console.log(`Creating "${contentTypeId}" entry`);
     const entry = await env.createEntry(contentTypeId, { fields });
     await entry.publish();

@@ -1,6 +1,9 @@
 import React, { useEffect, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import Helmet from 'react-helmet';
+import { Helmet } from 'react-helmet';
+import * as shapes from './proptypes';
+
+import '../index.css';
 
 const Layout = ({ children, config, metadata: { title, description } }) => {
   const {
@@ -61,24 +64,9 @@ const Layout = ({ children, config, metadata: { title, description } }) => {
   );
 };
 
-const localeShape = PropTypes.shape({
-  code: PropTypes.string.isRequired,
-  localizedPaths: PropTypes.object.isRequired,
-});
-
 Layout.propTypes = {
-  metadata: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-  }),
-  config: PropTypes.shape({
-    path: PropTypes.string.isRequired,
-    localization: PropTypes.shape({
-      locale: localeShape,
-    }).isRequired,
-    env: PropTypes.string.isRequired,
-    domain: PropTypes.string.isRequired,
-  }).isRequired,
+  metadata: shapes.metadata,
+  config: shapes.config,
   children: PropTypes.node,
 };
 

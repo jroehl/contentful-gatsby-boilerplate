@@ -1,6 +1,6 @@
-const { removeHyphens } = require('./utils');
+const { removeHyphens } = require('../utils');
 
-const getPages = locale => `
+const getPages = (locale) => `
   query {
     allContentfulPage(filter: { node_locale: { eq: "${locale}" } }) {
         edges {
@@ -17,7 +17,7 @@ const getPages = locale => `
 const getLocalizedPath = (locales, contentfulId) => `
   query {
     ${locales
-      .map(locale => {
+      .map((locale) => {
         const parsedLocale = removeHyphens(locale);
         return `${parsedLocale}: contentfulPage( contentful_id: {eq: "${contentfulId}"}, node_locale: {eq: "${locale.code}"}) { path }`;
       })

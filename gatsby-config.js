@@ -1,24 +1,33 @@
-require('dotenv').config();
+const { getContentfulEnvironment } = require('./gatsby/utils');
 
 const {
-  CONTENTFUL_SPACE_ID: spaceId,
-  CONTENTFUL_DELIVERY_TOKEN: accessToken,
-  CONTENTFUL_ENVIRONMENT: environment = 'master',
-} = process.env;
+  environment,
+  host,
+  spaceId,
+  deliveryToken,
+} = getContentfulEnvironment();
 
-if (!spaceId || !accessToken)
+if (!spaceId || !deliveryToken)
   throw new Error(
     'A contentful spaceId and delivery token need to be provided.'
   );
 
-module.exports = {
-  plugins: [
-    'gatsby-transformer-sharp',
-    'gatsby-plugin-react-helmet',
-    'gatsby-plugin-sharp',
-    {
-      resolve: 'gatsby-source-contentful',
-      options: { spaceId, accessToken, environment, useNameForId: false },
+const plugins = [
+  'gatsby-transformer-sharp',
+  'gatsby-plugin-react-helmet',
+  'gatsby-plugin-sharp',
+  {
+    resolve: 'gatsby-source-contentful',
+    options: {
+      spaceId,
+      accessToken: deliveryToken,
+      host,
+      environment,
+      useNameForId: false,
     },
-  ],
+  },
+];
+
+module.exports = {
+  plugins,
 };

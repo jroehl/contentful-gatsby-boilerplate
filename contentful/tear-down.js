@@ -2,14 +2,12 @@ require('dotenv').config();
 const contentful = require('contentful-management');
 const { readFileSync, writeFileSync, existsSync } = require('fs');
 const { resolve } = require('path');
+const { getContentfulEnvironment } = require('../shared/utils');
 
-const {
-  CONTENTFUL_MANAGEMENT_TOKEN: accessToken,
-  CONTENTFUL_SPACE_ID: spaceId,
-} = process.env;
+const { spaceId, managementToken } = getContentfulEnvironment();
 
 const init = async () => {
-  const client = contentful.createClient({ accessToken });
+  const client = contentful.createClient({ accessToken: managementToken });
 
   const space = await client.getSpace(spaceId);
   console.log(`Deleting space "${space.sys.id}"`);

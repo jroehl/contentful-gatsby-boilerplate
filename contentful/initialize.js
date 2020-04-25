@@ -1,18 +1,20 @@
-require('dotenv').config();
 const open = require('open');
 const contentfulImport = require('contentful-import');
 const { readFileSync, writeFileSync, existsSync } = require('fs');
 const { resolve } = require('path');
+const { createSpace } = require('./utils');
 const {
-  createSpace,
-  credentials: { cmaToken },
-} = require('./utils');
+  getContentfulEnvironment,
+  getBuildEnvironment,
+} = require('../shared/utils');
 
 const {
-  CONTENTFUL_ENVIRONMENT: environment = 'master',
-  CONTENTFUL_ORGANIZATION_ID: organizationId,
-  URL,
-} = process.env;
+  environment,
+  organizationId,
+  managementToken,
+} = getContentfulEnvironment();
+
+const { domain } = getBuildEnvironment();
 
 const args = process.argv.slice(2).join(' ');
 const skipContent = args.includes('--skip-content');
@@ -42,14 +44,14 @@ const init = async () => {
     contentModelOnly: skipContent || skipLocales,
     skipLocales,
     spaceId,
-    managementToken: cmaToken,
+    managementToken,
   });
 
   const apiKey = await space.createApiKey({ name: 'Gatsby' });
   const envLines = [
     '### Generated environment variables',
     'REDIRECT_DEFAULT_PREFIX="en"',
-    !URL && 'URL="https://hinterland.software"',
+    !domain && 'URL="https://hinterland.software"',
     `CONTENTFUL_DELIVERY_TOKEN="${apiKey.accessToken}"`,
     `CONTENTFUL_SPACE_ID="${spaceId}"`,
   ].filter(Boolean);

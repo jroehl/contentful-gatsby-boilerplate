@@ -1,9 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import RichText from './RichText';
+import * as shapes from './proptypes';
 
-const PageContent = props => {
+const PageContent = (props) => {
   const { content, config } = props;
   return (
     <section>
@@ -13,8 +13,8 @@ const PageContent = props => {
 };
 
 PageContent.propTypes = {
-  content: PropTypes.shape({ json: PropTypes.object }),
-  config: PropTypes.object.isRequired,
+  content: shapes.richTextJson,
+  config: shapes.config,
 };
 
 PageContent.defaultProps = {};
