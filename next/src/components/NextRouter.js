@@ -1,8 +1,9 @@
 import React, { useMemo } from 'react';
-import PropTypes from 'prop-types';
-import Page from '../../components/Page';
 import traverse from 'traverse';
-import * as shapes from '../../components/proptypes';
+import PropTypes from 'prop-types';
+
+import Page from '../../../src/components/Page';
+import * as shapes from '../../../src/components/proptypes';
 
 const findMissingLinks = (obj) => {
   return traverse(obj).reduce(

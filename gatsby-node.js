@@ -7,7 +7,8 @@ const { getLocales } = require('./contentful/utils');
 
 const { env, domain, redirectDefaultPrefix } = getBuildEnvironment();
 
-const pageTemplate = resolve(__dirname, 'src', 'templates', 'page.js');
+const gatsbySrcDirectory = resolve(__dirname, 'gatsby', 'src');
+const pageTemplate = resolve(gatsbySrcDirectory, 'templates', 'page.js');
 
 const sitemapParser = new SitemapParser(domain);
 
@@ -85,7 +86,7 @@ exports.onCreateWebpackConfig = ({ actions }) => {
   actions.setWebpackConfig({
     resolve: {
       alias: {
-        'framework-adapter': resolve(__dirname, 'src', 'adapter', 'gatsby.js'),
+        'framework-adapter': resolve(gatsbySrcDirectory, 'adapter.js'),
       },
     },
   });

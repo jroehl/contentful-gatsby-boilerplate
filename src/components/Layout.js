@@ -1,6 +1,6 @@
 import React, { useEffect, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import Helmet from 'react-helmet';
+import { Helmet } from 'react-helmet';
 import * as shapes from './proptypes';
 
 const Layout = ({ children, config, metadata: { title, description } }) => {

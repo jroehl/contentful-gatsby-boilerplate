@@ -2,20 +2,19 @@ const withPlugins = require('next-compose-plugins');
 const withTM = require('next-transpile-modules');
 const { resolve } = require('path');
 
-const srcDirectory = resolve(__dirname, 'src');
-const sharedDirectory = resolve(__dirname, 'shared');
-const adapterFile = resolve(srcDirectory, 'adapter', 'next.js');
-const transpile = [
-  resolve(__dirname, 'next'),
-  resolve(srcDirectory, 'components'),
-  resolve(srcDirectory, 'utils.js'),
-  resolve(sharedDirectory, 'utils.js'),
-  adapterFile,
+const pathsToTranspile = [
+  resolve(__dirname, 'src'),
+  resolve(__dirname, 'shared'),
 ];
 
-module.exports = withPlugins([withTM(transpile)], {
+module.exports = withPlugins([withTM(pathsToTranspile)], {
   webpack: (config, options) => {
-    config.resolve.alias['framework-adapter'] = adapterFile;
+    config.resolve.alias['framework-adapter'] = resolve(
+      __dirname,
+      'next',
+      'src',
+      'adapter.js'
+    );
     return config;
   },
 });
