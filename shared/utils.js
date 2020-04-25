@@ -1,4 +1,7 @@
 const slg = require('slug');
+const toCamelCase = require('lodash.camelcase');
+
+const CF_PREFIX = 'CONTENTFUL_';
 
 const sanitizePath = (path) =>
   ['', ...path.split('/').filter(Boolean), ''].join('/');
@@ -63,6 +66,42 @@ const enrichLocales = (locales, localized, redirectDefaultPrefix) => {
   return locales.map((locale) => ({ ...locale, localizedPaths }));
 };
 
+const getBuildEnvironment = () => {
+  // require('dotenv').config();
+  const {
+    BUILD_ENV,
+    NODE_ENV = 'development',
+    URL,
+    REDIRECT_DEFAULT_PREFIX,
+  } = process.env;
+
+  return {
+    env: BUILD_ENV || NODE_ENV,
+    domain: URL,
+    redirectDefaultPrefix: REDIRECT_DEFAULT_PREFIX,
+  };
+};
+
+const defaults = {
+  environment: 'master',
+  host: 'cdn.contentful.com',
+};
+
+const getContentfulEnvironment = () => {
+  // require('dotenv').config();
+  const config = Object.entries(process.env).reduce((acc, [key, value]) => {
+    if (!key.match(new RegExp(`^${CF_PREFIX}.*`))) return acc;
+    const sanitizedKey = toCamelCase(key.replace(CF_PREFIX, ''));
+    const sanitizedValue = value === undefined ? defaults[sanitizedKey] : value;
+
+    return {
+      ...acc,
+      [sanitizedKey]: sanitizedValue,
+    };
+  }, defaults);
+  return config;
+};
+
 module.exports = {
   Logger,
   slug,
@@ -70,4 +109,6 @@ module.exports = {
   getDefaultPath,
   removeHyphens,
   enrichLocales,
+  getBuildEnvironment,
+  getContentfulEnvironment,
 };

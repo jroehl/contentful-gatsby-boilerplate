@@ -1,26 +1,26 @@
 const contentful = require('contentful');
 const contentfulManagement = require('contentful-management');
-const { Logger } = require('../shared/utils');
+const { Logger, getContentfulEnvironment } = require('../shared/utils');
 
 const {
-  CONTENTFUL_SPACE_ID: spaceId,
-  CONTENTFUL_ENVIRONMENT: environment = 'master',
-  CONTENTFUL_DELIVERY_TOKEN: cdaAccessToken,
-  CONTENTFUL_MANAGEMENT_TOKEN: cmaAccessToken,
-  CONTENTFUL_PREVIEW_TOKEN: previewAccessToken,
-  CONTENTFUL_ORGANIZATION_ID: organizationId,
-} = process.env;
+  spaceId,
+  environment,
+  deliveryToken,
+  managementToken,
+  previewToken,
+  organizationId,
+} = getContentfulEnvironment();
 
 const log = (type) => {
   Logger.log(
-    `Creating Contentful ${type} API client for space ${spaceId} (${environment})`
+    `Creating Contentful <${type}> API client for space "${spaceId}" (${environment})`
   );
 };
 
 const getCmaClient = (creds = {}) => {
-  log('managment');
+  log('management');
   return contentfulManagement.createClient({
-    accessToken: cmaAccessToken,
+    accessToken: managementToken,
     ...creds,
   });
 };
@@ -30,7 +30,7 @@ const getCdaClient = (creds = {}) => {
   return contentful.createClient({
     space: spaceId,
     environment,
-    accessToken: cdaAccessToken,
+    accessToken: deliveryToken,
     ...creds,
   });
 };
@@ -40,7 +40,7 @@ const getPreviewClient = (creds = {}) => {
   return contentful.createClient({
     space: spaceId,
     environment,
-    accessToken: previewAccessToken,
+    accessToken: previewToken,
     host: 'preview.contentful.com',
     ...creds,
   });
@@ -112,7 +112,7 @@ module.exports = {
   getPreviewClient,
   credentials: {
     environment,
-    cmaToken: cmaAccessToken,
-    cdaToken: cdaAccessToken,
+    cmaToken: managementToken,
+    cdaToken: deliveryToken,
   },
 };

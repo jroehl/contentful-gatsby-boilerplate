@@ -1,27 +1,20 @@
-require('dotenv').config();
 const { resolve } = require('path');
 
-const { sanitizePath, Logger } = require('./shared/utils');
+const { sanitizePath, Logger, getBuildEnvironment } = require('./shared/utils');
 const { writeRobots, SitemapParser } = require('./gatsby/utils');
 const initActions = require('./gatsby/actions');
 const { getLocales } = require('./contentful/utils');
 
-const {
-  BUILD_ENV,
-  NODE_ENV = 'development',
-  URL,
-  REDIRECT_DEFAULT_PREFIX,
-} = process.env;
-
-const env = BUILD_ENV || NODE_ENV;
+const { env, domain, redirectDefaultPrefix } = getBuildEnvironment();
 
 const pageTemplate = resolve(__dirname, 'src', 'templates', 'page.js');
 
-const sitemapParser = new SitemapParser(URL);
+const sitemapParser = new SitemapParser(domain);
 
 exports.createPages = async (props) => {
   const { createRedirect, createPage, getPages, enrichLocales } = initActions(
-    props
+    props,
+    redirectDefaultPrefix
   );
 
   try {
@@ -47,7 +40,7 @@ exports.createPages = async (props) => {
         );
 
         if (hasMultipleLocales && isDefaultLocale) {
-          await createRedirect(REDIRECT_DEFAULT_PREFIX, sanitizedPath);
+          await createRedirect(sanitizedPath);
         }
 
         const localization = {
@@ -64,7 +57,7 @@ exports.createPages = async (props) => {
             ...node,
             config: {
               path: sanitizedPath,
-              domain: URL,
+              domain,
               env,
               localization,
             },

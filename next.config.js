@@ -6,6 +6,7 @@ const srcDirectory = resolve(__dirname, 'src');
 const sharedDirectory = resolve(__dirname, 'shared');
 const adapterFile = resolve(srcDirectory, 'adapter', 'next.js');
 const transpile = [
+  resolve(__dirname, 'next'),
   resolve(srcDirectory, 'components'),
   resolve(srcDirectory, 'utils.js'),
   resolve(sharedDirectory, 'utils.js'),

@@ -1,9 +1,9 @@
 import React from 'react';
 
-import Router from '../components/Router';
-import { getInitialProps } from '../utils';
+import NextRouter from '../components/NextRouter';
+import { getInitialProps } from '../../../next/utils';
 
-const NextAdapter = (props) => <Router {...props} />;
+const NextAdapter = (props) => <NextRouter {...props} />;
 
 NextAdapter.getInitialProps = getInitialProps;
 

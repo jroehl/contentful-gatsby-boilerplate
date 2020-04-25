@@ -8,4 +8,4 @@ export const Link = ({ to, children, ...props }) => {
   );
 };
 
-export const navigate = (...args) => Router.push(...args);
+export const navigate = Router.push;
