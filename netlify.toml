@@ -12,23 +12,23 @@
 # Deploy Preview context: All Deploy Previews
 # will inherit these settings.
 [context.deploy-preview]
-  environment = { NODE_ENV = "preview" }
+  environment = { BUILD_ENV = "preview" }
 
 # Specific branch context: all deploys from this specific branch will inherit
 # these settings.
 [context.branch-deploy] # 'preview' is a branch name
-  environment = { NODE_ENV = "preview" }
+  command = "npm run build:dynamic"
+  environment = { BUILD_ENV = "preview" }
 
 # Specific branch context: all deploys from this specific branch will inherit
 # these settings.
 [context.preview] # 'preview' is a branch name
-  command = "npm run build:dynamic"
-  environment = { NODE_ENV = "preview" }
+  environment = { BUILD_ENV = "preview" }
 
 # Production context: All deploys to the main
 # repository branch will inherit these settings.
 [context.production]
-  environment = { NODE_ENV = "production" }
+  environment = { BUILD_ENV = "production" }
 
 # [[redirects]]
 #   from = "/*"

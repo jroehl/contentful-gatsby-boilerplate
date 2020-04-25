@@ -2,7 +2,7 @@
 
 > This is an attempt to simplify the base boilerplate setup of a localized gatsby/contentful website
 >  
-> The site can be deployed static or using NODE_ENV="preview" dynamically. When set up as "preview", the build process uses a small static adapter to fetch all (preview API) data from Contentful dynamically on the client.
+> The site can be deployed static or using BUILD_ENV="preview" dynamically. When set up as "preview", the build process uses a small static adapter to fetch all (preview API) data from Contentful dynamically on the client.
 
 ## Start new website project
 
