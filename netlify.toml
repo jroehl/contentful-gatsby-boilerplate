@@ -17,7 +17,13 @@
 # Branch context: All deploys to this branch
 # will inherit these settings.
 [context.branch-deploy]
-  environment = { NODE_ENV = "staging" }
+  environment = { NODE_ENV = "development" }
+
+# Specific branch context: all deploys from this specific branch will inherit
+# these settings.
+[context.preview] # 'preview' is a branch name
+  command = "echo 'staging'"
+  environment = { NODE_ENV = "preview" }
 
 # Production context: All deploys to the main
 # repository branch will inherit these settings.
