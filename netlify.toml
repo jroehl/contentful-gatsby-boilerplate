@@ -24,7 +24,7 @@
 [context.production]
   environment = { NODE_ENV = "production" }
 
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
+# [[redirects]]
+#   from = "/*"
+#   to = "/index.html"
+#   status = 200
