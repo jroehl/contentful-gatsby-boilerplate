@@ -6,7 +6,7 @@
 #    that is where we will look for package.json/.nvmrc/etc not repo root!
 
 [build]
-  publish = "build"
+  publish = "public"
   command = "npm run build"
 
 # Deploy Preview context: All Deploy Previews
@@ -17,7 +17,6 @@
 # Specific branch context: all deploys from this specific branch will inherit
 # these settings.
 [context.preview] # 'preview' is a branch name
-  command = "echo 'staging'"
   environment = { NODE_ENV = "preview" }
 
 # Production context: All deploys to the main
