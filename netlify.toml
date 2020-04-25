@@ -25,6 +25,20 @@
   environment = { NODE_ENV = "production" }
 
 # [[redirects]]
-#   from = "/*"
+#   from = "/"
 #   to = "/index.html"
 #   status = 200
+
+[[redirects]]
+  from = "/"
+  to = "/de"
+  status = 302
+  force = true
+  conditions = { Language = ["de"] }
+
+[[redirects]]
+  from = "/"
+  to = "/en"
+  status = 302
+  force = true
+  conditions = { Language = ["en"] }
