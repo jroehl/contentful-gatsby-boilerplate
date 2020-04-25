@@ -42,3 +42,8 @@
   status = 301
   force = true
   conditions = { Language = ["en"] }
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
