@@ -6,18 +6,13 @@
 #    that is where we will look for package.json/.nvmrc/etc not repo root!
 
 [build]
-  publish = "dist"
+  publish = "build"
   command = "npm run build"
 
 # Deploy Preview context: All Deploy Previews
 # will inherit these settings.
 [context.deploy-preview]
-  environment = { NODE_ENV = "development" }
-
-# Branch context: All deploys to this branch
-# will inherit these settings.
-[context.branch-deploy]
-  environment = { NODE_ENV = "development" }
+  environment = { NODE_ENV = "preview" }
 
 # Specific branch context: all deploys from this specific branch will inherit
 # these settings.

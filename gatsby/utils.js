@@ -68,14 +68,13 @@ const enrichLocales = (locales, localized, redirectDefaultPrefix) => {
 
 const getBuildEnvironment = () => {
   const {
-    BUILD_ENV,
     NODE_ENV = 'development',
     URL,
     REDIRECT_DEFAULT_PREFIX,
   } = process.env;
 
   return {
-    env: BUILD_ENV || NODE_ENV,
+    env: NODE_ENV,
     domain: URL,
     redirectDefaultPrefix: REDIRECT_DEFAULT_PREFIX,
   };
