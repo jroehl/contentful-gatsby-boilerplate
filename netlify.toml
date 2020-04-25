@@ -22,6 +22,7 @@
 # Specific branch context: all deploys from this specific branch will inherit
 # these settings.
 [context.preview] # 'preview' is a branch name
+  command = "npm run build:dynamic"
   environment = { NODE_ENV = "preview" }
 
 # Production context: All deploys to the main
