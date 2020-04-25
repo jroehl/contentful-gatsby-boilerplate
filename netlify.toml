@@ -23,3 +23,8 @@
 # repository branch will inherit these settings.
 [context.production]
   environment = { NODE_ENV = "production" }
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

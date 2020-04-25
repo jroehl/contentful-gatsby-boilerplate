@@ -1,4 +1,4 @@
-const { Logger, getDefaultPath, enrichLocales } = require('../shared/utils');
+const { Logger, getDefaultPath, enrichLocales } = require('../utils');
 const { getPages, getLocalizedPath } = require('./queries');
 
 const init = ({ graphql, actions }, redirectDefaultPrefix) => {

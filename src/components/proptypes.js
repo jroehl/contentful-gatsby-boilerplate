@@ -45,7 +45,7 @@ export const resources = PropTypes.arrayOf(
 export const pageContent = PropTypes.arrayOf(
   PropTypes.shape({
     __typename: PropTypes.string.isRequired,
-    resources: resources.isRequired,
+    resources: resources,
   })
 );
 

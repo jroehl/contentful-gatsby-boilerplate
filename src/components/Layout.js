@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import * as shapes from './proptypes';
 
+import '../index.css';
+
 const Layout = ({ children, config, metadata: { title, description } }) => {
   const {
     path,

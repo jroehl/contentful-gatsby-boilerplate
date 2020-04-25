@@ -1,8 +1,7 @@
 import React from 'react';
 import { graphql } from 'gatsby';
-import Page from '../../../src/components/Page';
 
-import '../../../src/index.css';
+import Page from '../../../src/components/Page';
 
 const GatsbyAdapter = (props) => <Page {...props} />;
 

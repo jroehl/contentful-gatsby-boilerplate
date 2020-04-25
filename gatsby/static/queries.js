@@ -1,4 +1,4 @@
-const { removeHyphens } = require('../shared/utils');
+const { removeHyphens } = require('../utils');
 
 const getPages = (locale) => `
   query {

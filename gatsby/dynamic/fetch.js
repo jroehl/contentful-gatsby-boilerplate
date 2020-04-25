@@ -1,10 +1,13 @@
-const initActions = require('./actions');
-const { getBuildEnvironment } = require('../shared/utils');
+import initActions from './actions';
 
-const getInitialProps = async ({ query }) => {
-  const { env, domain } = getBuildEnvironment();
-
-  const { getLocalization, getLocales, getEntries } = initActions();
+const fetchProps = async ({
+  query,
+  env: {
+    contentful,
+    build: { env, domain },
+  },
+}) => {
+  const { getLocalization, getLocales, getEntries } = initActions(contentful);
 
   const { slug = [] } = query;
   const [locale] = slug;
@@ -25,15 +28,12 @@ const getInitialProps = async ({ query }) => {
 
   const path = `/${slug.join('/')}`;
   const entries = await getEntries(path, requestedLocale);
+  const [content] = entries.items;
 
-  const localization = await getLocalization(
-    entries.items[0],
-    requestedLocale,
-    locales
-  );
+  const localization = await getLocalization(content, requestedLocale, locales);
 
   return {
-    stringifiedPage: entries.stringifySafe(),
+    content,
     pageContext: {
       config: {
         path,
@@ -45,6 +45,4 @@ const getInitialProps = async ({ query }) => {
   };
 };
 
-module.exports = {
-  getInitialProps,
-};
+export default fetchProps;

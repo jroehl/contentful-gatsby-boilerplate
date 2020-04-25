@@ -1,18 +1,64 @@
 const { resolve } = require('path');
 
-const { sanitizePath, Logger, getBuildEnvironment } = require('./shared/utils');
-const { writeRobots, SitemapParser } = require('./gatsby/utils');
-const initActions = require('./gatsby/actions');
+const {
+  sanitizePath,
+  Logger,
+  getBuildEnvironment,
+  getContentfulEnvironment,
+} = require('./gatsby/utils');
+const { writeRobots, SitemapParser } = require('./gatsby/build-utils');
+const initActions = require('./gatsby/static/actions');
 const { getLocales } = require('./contentful/utils');
 
-const { env, domain, redirectDefaultPrefix } = getBuildEnvironment();
-
-const gatsbySrcDirectory = resolve(__dirname, 'gatsby', 'src');
-const pageTemplate = resolve(gatsbySrcDirectory, 'templates', 'page.js');
+const buildEnvironment = getBuildEnvironment();
+const { env, domain, redirectDefaultPrefix } = buildEnvironment;
 
 const sitemapParser = new SitemapParser(domain);
 
-exports.createPages = async (props) => {
+const buildDynamic = async ({ actions }) => {
+  const pageTemplate = resolve(
+    __dirname,
+    'gatsby',
+    'dynamic',
+    'templates',
+    'page.js'
+  );
+
+  const { previewToken, spaceId, environment } = getContentfulEnvironment();
+
+  try {
+    sitemapParser.addURL('/');
+
+    await actions.createPage({
+      path: '/',
+      component: pageTemplate,
+      matchPath: '/*',
+      context: {
+        env: {
+          build: buildEnvironment,
+          contentful: {
+            previewToken,
+            spaceId,
+            environment,
+          },
+        },
+      },
+    });
+  } catch (error) {
+    Logger.error(error);
+    process.exit(1);
+  }
+};
+
+const buildStatic = async (props) => {
+  const pageTemplate = resolve(
+    __dirname,
+    'gatsby',
+    'static',
+    'templates',
+    'page.js'
+  );
+
   const { createRedirect, createPage, getPages, enrichLocales } = initActions(
     props,
     redirectDefaultPrefix
@@ -72,6 +118,8 @@ exports.createPages = async (props) => {
   }
 };
 
+exports.createPages = env === 'preview' ? buildDynamic : buildStatic;
+
 exports.onPostBuild = async () => {
   try {
     sitemapParser.writeSitemap();
@@ -80,14 +128,4 @@ exports.onPostBuild = async () => {
     console.error(err);
     process.exit(1);
   }
-};
-
-exports.onCreateWebpackConfig = ({ actions }) => {
-  actions.setWebpackConfig({
-    resolve: {
-      alias: {
-        'framework-adapter': resolve(gatsbySrcDirectory, 'adapter.js'),
-      },
-    },
-  });
 };

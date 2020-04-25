@@ -1,8 +1,18 @@
-const { getPreviewClient } = require('../contentful/utils');
-const { enrichLocales, removeHyphens } = require('../shared/utils');
+import * as contentful from 'contentful';
 
-const init = () => {
-  const previewClient = getPreviewClient();
+import { enrichLocales, removeHyphens } from '../utils';
+
+const getPreviewClient = ({ spaceId, environment, previewToken } = {}) => {
+  return contentful.createClient({
+    space: spaceId,
+    environment: environment,
+    accessToken: previewToken,
+    host: 'preview.contentful.com',
+  });
+};
+
+const init = (credentials) => {
+  const previewClient = getPreviewClient(credentials);
 
   const getLocalization = async (entry, locale, locales) => {
     const { sys } = entry;
@@ -53,4 +63,4 @@ const init = () => {
   return { getLocalization, getLocales, getEntries };
 };
 
-module.exports = init;
+export default init;

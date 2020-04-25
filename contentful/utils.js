@@ -1,6 +1,6 @@
 const contentful = require('contentful');
 const contentfulManagement = require('contentful-management');
-const { Logger, getContentfulEnvironment } = require('../shared/utils');
+const { Logger, getContentfulEnvironment } = require('../gatsby/utils');
 
 const {
   spaceId,

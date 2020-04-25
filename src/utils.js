@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'framework-adapter';
+import { Link } from 'gatsby';
 
 export const renderRoutesRecursively = (pages) => {
   if (!pages) return null;

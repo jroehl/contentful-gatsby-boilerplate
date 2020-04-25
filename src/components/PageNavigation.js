@@ -1,5 +1,5 @@
 import React from 'react';
-import { navigate } from 'framework-adapter';
+import { navigate } from 'gatsby';
 
 import { renderRoutesRecursively, translate } from '../utils';
 import RichText from './RichText';
