@@ -55,7 +55,7 @@ const init = (credentials) => {
       include: 10,
     });
     if (!entries || !entries.items.length)
-      throw new Error(`No content found for path "${path}"`);
+      throw new Error(`No content/route found for path "${path}"`);
 
     return entries;
   };
