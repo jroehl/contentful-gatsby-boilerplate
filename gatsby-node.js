@@ -9,6 +9,7 @@ const {
 const {
   writeRobots,
   writeRedirects,
+  RedirectParser,
   SitemapParser,
 } = require('./gatsby/build-utils');
 const initActions = require('./gatsby/static/actions');
@@ -18,6 +19,7 @@ const buildEnvironment = getBuildEnvironment();
 const { env, domain, redirectDefaultPrefix } = buildEnvironment;
 
 const sitemapParser = new SitemapParser(domain);
+const redirectParser = new RedirectParser();
 
 const isPreview = env === 'preview';
 
@@ -34,6 +36,7 @@ const buildDynamic = async ({ actions }) => {
 
   try {
     sitemapParser.addURL('/');
+    redirectParser.addRedirect({ from: '/*', to: '/index.html', status: 200 });
 
     await actions.createPage({
       path: '/',
@@ -93,7 +96,8 @@ const buildStatic = async (props) => {
         );
 
         if (hasMultipleLocales && isDefaultLocale) {
-          await createRedirect(sanitizedPath);
+          const redirect = await createRedirect(sanitizedPath);
+          redirectParser.addRedirect(redirect);
         }
 
         const localization = {
@@ -129,8 +133,8 @@ exports.createPages = isPreview ? buildDynamic : buildStatic;
 exports.onPostBuild = async () => {
   try {
     sitemapParser.writeSitemap();
+    redirectParser.writeRedirects();
     writeRobots(env);
-    writeRedirects(env);
   } catch (err) {
     console.error(err);
     process.exit(1);
