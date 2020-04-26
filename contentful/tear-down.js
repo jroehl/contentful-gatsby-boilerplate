@@ -1,4 +1,3 @@
-require('dotenv').config();
 const contentful = require('contentful-management');
 const { readFileSync, writeFileSync, existsSync } = require('fs');
 const { resolve } = require('path');

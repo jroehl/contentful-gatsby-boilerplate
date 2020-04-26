@@ -110,9 +110,4 @@ module.exports = {
   getCdaClient,
   getCmaClient,
   getPreviewClient,
-  credentials: {
-    environment,
-    cmaToken: managementToken,
-    cdaToken: deliveryToken,
-  },
 };

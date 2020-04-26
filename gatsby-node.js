@@ -139,3 +139,9 @@ exports.onPostBuild = async () => {
     process.exit(1);
   }
 };
+
+exports.onCreateWebpackConfig = ({ actions }) => {
+  actions.setWebpackConfig({
+    node: { fs: 'empty' }, // to be able to require dotenv in shared files
+  });
+};

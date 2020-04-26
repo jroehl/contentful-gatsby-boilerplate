@@ -67,6 +67,7 @@ const enrichLocales = (locales, localized, redirectDefaultPrefix) => {
 };
 
 const getBuildEnvironment = () => {
+  require('dotenv').config();
   const {
     NODE_ENV = 'development',
     BUILD_ENV,
@@ -87,6 +88,7 @@ const defaults = {
 };
 
 const getContentfulEnvironment = () => {
+  require('dotenv').config();
   const config = Object.entries(process.env).reduce((acc, [key, value]) => {
     if (!key.match(new RegExp(`^${CF_PREFIX}.*`))) return acc;
     const sanitizedKey = toCamelCase(key.replace(CF_PREFIX, ''));
