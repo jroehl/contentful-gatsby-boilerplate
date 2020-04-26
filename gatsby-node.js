@@ -8,7 +8,6 @@ const {
 } = require('./gatsby/utils');
 const {
   writeRobots,
-  writeRedirects,
   RedirectParser,
   SitemapParser,
 } = require('./gatsby/build-utils');
