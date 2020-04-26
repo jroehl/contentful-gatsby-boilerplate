@@ -1,5 +1,13 @@
 # contentful-gatsby-boilerplate
 
+- [contentful-gatsby-boilerplate](#contentful-gatsby-boilerplate)
+  - [Setup](#setup)
+    - [Start new website project](#start-new-website-project)
+    - [Tear down website space](#tear-down-website-space)
+  - [Develop and build](#develop-and-build)
+    - [Static](#static)
+    - [Dynamic](#dynamic)
+
 This is a PoC of a [Contentful](https://www.contentful.com/) [Gatsby](https://www.gatsbyjs.org/) base setup.
 
 It simplifies the base setup, by supplying scripts to set up a localized gatsby/contentful website.
@@ -11,14 +19,6 @@ The build process creates following files:
 - `_redirects` file for Netlify with SPA redirects for the dynamic version or default redirects for the static version
 - `robots.txt` file to allow or disallow crawling of the website -depending on the `NODE_ENV/BUILD_ENV`
 - `sitemap.xml` file to have a reference for all created pages
-
-- [contentful-gatsby-boilerplate](#contentful-gatsby-boilerplate)
-  - [Setup](#setup)
-    - [Start new website project](#start-new-website-project)
-    - [Tear down website space](#tear-down-website-space)
-  - [Develop and build](#develop-and-build)
-    - [Static](#static)
-    - [Dynamic](#dynamic)
 
 ## Setup
 
