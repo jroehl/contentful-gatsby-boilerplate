@@ -1,12 +1,18 @@
 # contentful-gatsby-boilerplate
 
+## ToC
+
 - [contentful-gatsby-boilerplate](#contentful-gatsby-boilerplate)
+  - [ToC](#toc)
+  - [About](#about)
   - [Setup](#setup)
     - [Start new website project](#start-new-website-project)
     - [Tear down website space](#tear-down-website-space)
   - [Develop and build](#develop-and-build)
     - [Static](#static)
     - [Dynamic](#dynamic)
+
+## About
 
 This is a PoC of a [Contentful](https://www.contentful.com/) [Gatsby](https://www.gatsbyjs.org/) base setup.
 
