@@ -96,8 +96,18 @@ const writeRobots = (env) => {
   writeFileSync(resolve(publicDir, 'robots.txt'), robots);
 };
 
+const writeRedirects = (env) => {
+  if (env === 'preview') {
+    const publicDir = getPublicDirIfNotExists();
+    const redirects = '/* /index.html 200';
+    Logger.log(`Writing "${env}" public/_redirects`);
+    writeFileSync(resolve(publicDir, '_redirects'), redirects);
+  }
+};
+
 module.exports = {
   getPublicDirIfNotExists,
   writeRobots,
+  writeRedirects,
   SitemapParser,
 };

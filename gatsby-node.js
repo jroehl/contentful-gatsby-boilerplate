@@ -6,7 +6,11 @@ const {
   getBuildEnvironment,
   getContentfulEnvironment,
 } = require('./gatsby/utils');
-const { writeRobots, SitemapParser } = require('./gatsby/build-utils');
+const {
+  writeRobots,
+  writeRedirects,
+  SitemapParser,
+} = require('./gatsby/build-utils');
 const initActions = require('./gatsby/static/actions');
 const { getLocales } = require('./contentful/utils');
 
@@ -14,6 +18,8 @@ const buildEnvironment = getBuildEnvironment();
 const { env, domain, redirectDefaultPrefix } = buildEnvironment;
 
 const sitemapParser = new SitemapParser(domain);
+
+const isPreview = env === 'preview';
 
 const buildDynamic = async ({ actions }) => {
   const pageTemplate = resolve(
@@ -118,12 +124,13 @@ const buildStatic = async (props) => {
   }
 };
 
-exports.createPages = env === 'preview' ? buildDynamic : buildStatic;
+exports.createPages = isPreview ? buildDynamic : buildStatic;
 
 exports.onPostBuild = async () => {
   try {
     sitemapParser.writeSitemap();
     writeRobots(env);
+    writeRedirects(env);
   } catch (err) {
     console.error(err);
     process.exit(1);

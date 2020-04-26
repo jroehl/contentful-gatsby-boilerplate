@@ -28,22 +28,3 @@
 # repository branch will inherit these settings.
 [context.production]
   environment = { BUILD_ENV = "production" }
-
-[[redirects]]
-  from = "/"
-  to = "/de"
-  status = 301
-  force = true
-  conditions = { Language = ["de"] }
-
-[[redirects]]
-  from = "/"
-  to = "/en"
-  status = 301
-  force = true
-  conditions = { Language = ["en"] }
-
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
