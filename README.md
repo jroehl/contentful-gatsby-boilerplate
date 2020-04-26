@@ -1,12 +1,22 @@
 # contentful-gatsby-boilerplate
 
-This is a PoC of a contentful-gatsby-boilerplat base setup.
+This is a PoC of a [Contentful](https://www.contentful.com/) [Gatsby](https://www.gatsbyjs.org/) base setup.
+
 It simplifies the base setup, by supplying scripts to set up a localized gatsby/contentful website.
-You can use as statically generated or a dynamically fetched version.
 
-The site can be deployed static or using BUILD_ENV="preview" dynamically. When set up as "preview", the build process uses a small static adapter to fetch all (preview API) data from Contentful dynamically on the client.
+The site can be deployed statically with Gatsby or using BUILD_ENV="preview" dynamically. When set up as "preview", the build process uses a small statically generated adapter to handle routing and fetch all data from Contentful dynamically on the client.
 
-## Start new website project
+- [contentful-gatsby-boilerplate](#contentful-gatsby-boilerplate)
+  - [Setup](#setup)
+    - [Start new website project](#start-new-website-project)
+    - [Tear down website space](#tear-down-website-space)
+  - [Develop and build](#develop-and-build)
+    - [Run statically](#run-statically)
+    - [Run dynamically](#run-dynamically)
+
+## Setup
+
+### Start new website project
 
 > Needs "CONTENTFUL_ORGANIZATION_ID" and "CONTENTFUL_MANAGEMENT_TOKEN" added to environment variables (or .env file)
 
@@ -17,7 +27,7 @@ npm start
 open http://localhost:8000/en
 ```
 
-## Tear down website space
+### Tear down website space
 
 > Deletes the "CONTENTFUL_SPACE_ID" space from the environment variables
 
@@ -26,20 +36,30 @@ open http://localhost:8000/en
 npm run contentful:tear-down
 ```
 
-## Run statically
+## Develop and build
+
+### Run [statically](https://contentful-gatsby-boilerplate.netlify.app/)
 
 > Needs "CONTENTFUL_SPACE_ID" and "CONTENTFUL_DELIVERY_TOKEN" added to environment variables (or .env file)
 
+This creates a static version of the website that uses the [Contentful Delivery API](https://www.contentful.com/developers/docs/references/content-delivery-api/) using [gatsby-source-contentful](https://www.gatsbyjs.org/packages/gatsby-source-contentful/) to fetch data from Contentful during the build.
+
 ```bash
 npm install
-npm run start:static
+npm run start:static # or npm run build:static
 ```
 
-## Run dynamically
+[Example](https://contentful-gatsby-boilerplate.netlify.app/) of a static version deployed using [Netlify](https://www.netlify.com/).
+
+### Run [dynamically](https://preview--contentful-gatsby-boilerplate.netlify.app/)
 
 > Needs "CONTENTFUL_SPACE_ID" and "CONTENTFUL_PREVIEW_TOKEN" added to environment variables (or .env file)
 
+This creates a dynamic version of the website that uses the [Contentful Preview API](https://www.contentful.com/developers/docs/references/content-preview-api/) to fetch data from Contentful dynamically on every load.
+
 ```bash
 npm install
-npm run start:dynamic
+npm run start:dynamic # or npm run build:dynamic
 ```
+
+[Example](https://preview--contentful-gatsby-boilerplate.netlify.app/) of a dynamic version deployed using [Netlify](https://www.netlify.com/).
