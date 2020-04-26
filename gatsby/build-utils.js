@@ -104,21 +104,36 @@ class RedirectParser {
     this.publicDir = getPublicDirIfNotExists();
   }
 
+  parseQuery(query) {
+    if (!query) return '';
+    if (Array.isArray(query)) {
+      return query.map((key) => `${key}=:${key}`).join(' ');
+    }
+    return Object.entries(query)
+      .map(([key, value]) => `${key}=${value || `:${key}`}`)
+      .join(' ');
+  }
+
   addRedirect(redirect) {
     const from = redirect.from || redirect.fromPath;
     const to = redirect.to || redirect.toPath;
     const status = redirect.isPermanent
       ? 301
-      : redirect.status || redirect.statusCode;
-    const force = redirect.force;
-    this.redirects = [...this.redirects, { from, to, status, force }];
+      : redirect.status || redirect.statusCode || 301;
+    const force = redirect.force ? '!' : '';
+    const query = this.parseQuery(redirect.query);
+    const trailing = redirect.trailing || '';
+    this.redirects = [
+      ...this.redirects,
+      { from, to, query, status, force, trailing },
+    ];
   }
 
   parseRedirects() {
     return this.redirects
       .map(
-        ({ from, to, status = '', force }) =>
-          `${force ? '!' : ''}${from} ${to} ${status}`
+        ({ from, to, status, query, force, trailing }) =>
+          `${from} ${query} ${to} ${status}${force} ${trailing}`
       )
       .join('\n');
   }
