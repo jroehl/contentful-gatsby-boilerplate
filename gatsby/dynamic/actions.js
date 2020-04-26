@@ -60,7 +60,13 @@ const init = (credentials) => {
     return entries;
   };
 
-  return { getLocalization, getLocales, getEntries };
+  const sync = async (props = {}) => {
+    return previewClient.sync(
+      props.nextSyncToken ? props : { ...props, initial: true }
+    );
+  };
+
+  return { getLocalization, getLocales, getEntries, sync };
 };
 
 export default init;

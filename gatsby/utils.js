@@ -55,7 +55,7 @@ const enrichLocales = (locales, localized, redirectDefaultPrefix) => {
       const defaultPath = getDefaultPath(redirectDefaultPrefix, path);
       return {
         ...red,
-        ['default']: defaultPath || path,
+        default: defaultPath || path,
         [locale.code]: path,
       };
     }

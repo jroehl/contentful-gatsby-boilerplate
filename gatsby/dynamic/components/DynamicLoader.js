@@ -1,13 +1,39 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { navigate } from 'gatsby';
 
 import fetchProps from '../fetch';
 import DynamicParser from './DynamicParser';
+import initActions from '../actions';
 
 const getSlug = (path) => path.split('/').filter(Boolean);
 
-const useDynamicContentOrRedirect = ({ env, pathname }) => {
+const useInterval = (callback, delay) => {
+  const fixedCallback = useCallback(callback, []);
+  useEffect(() => {
+    const id = setInterval(fixedCallback, delay);
+    return () => clearInterval(id);
+  }, [delay, fixedCallback]);
+};
+
+const useContinuousSync = ({ contentful }) => {
+  const [nextSyncToken, setNextSyncToken] = useState(undefined);
+  const { sync } = initActions(contentful);
+  const delay = 10000; // use a very high rate to avoid reaching API limits
+
+  useInterval(async () => {
+    try {
+      const res = await sync({ nextSyncToken });
+      setNextSyncToken(res.nextSyncToken);
+    } catch (error) {
+      console.error(error);
+    }
+  }, delay);
+
+  return nextSyncToken;
+};
+
+const useDynamicContentOrRedirect = ({ env, pathname, nextSyncToken }) => {
   const [props, setProps] = useState(undefined);
 
   useEffect(() => {
@@ -24,7 +50,7 @@ const useDynamicContentOrRedirect = ({ env, pathname }) => {
       }
     };
     init();
-  }, [pathname, env]);
+  }, [pathname, env, nextSyncToken]);
 
   if (props?.to) {
     setProps(undefined);
@@ -51,9 +77,11 @@ const Message = ({ children, style }) => (
 );
 
 const DynamicLoader = ({ pageContext, location }) => {
+  const nextSyncToken = useContinuousSync(pageContext.env);
   const content = useDynamicContentOrRedirect({
     env: pageContext.env,
     pathname: location.pathname,
+    nextSyncToken,
   });
 
   if (!content) {
