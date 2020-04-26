@@ -22,7 +22,7 @@ const getPublicDirIfNotExists = () => {
 class SitemapParser {
   constructor(domain = 'http://localhost') {
     this.urls = [];
-    this.domain = domain.endsWith('/') ? domain : domain.slice(0, -1);
+    this.domain = domain.endsWith('/') ? domain.slice(0, -1) : domain;
     this.publicDir = getPublicDirIfNotExists();
   }
 
@@ -114,7 +114,7 @@ class RedirectParser {
       .join(' ');
   }
 
-  addRedirect(redirect) {
+  addRedirect(redirect = {}) {
     const from = redirect.from || redirect.fromPath;
     const to = redirect.to || redirect.toPath;
     const status = redirect.isPermanent
@@ -123,10 +123,12 @@ class RedirectParser {
     const force = redirect.force ? '!' : '';
     const query = this.parseQuery(redirect.query);
     const trailing = redirect.trailing || '';
-    this.redirects = [
-      ...this.redirects,
-      { from, to, query, status, force, trailing },
-    ];
+    if (from && to) {
+      this.redirects = [
+        ...this.redirects,
+        { from, to, query, status, force, trailing },
+      ];
+    }
   }
 
   parseRedirects() {
