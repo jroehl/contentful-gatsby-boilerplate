@@ -37,7 +37,7 @@
     "contentful-import": "^7.7.11",
     "contentful-management": "^5.26.0",
     "dotenv": "^8.2.0",
-    "gatsby": "^2.20.36",
+    "gatsby": "^2.21.7",
     "gatsby-image": "^2.3.5",
     "gatsby-plugin-react-helmet": "^3.2.5",
     "gatsby-plugin-sharp": "^2.5.7",
