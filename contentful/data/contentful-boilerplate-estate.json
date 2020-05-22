@@ -6,128 +6,13 @@
           "sys": {
             "type": "Link",
             "linkType": "Space",
-            "id": "a7lxlrp123zx"
-          }
-        },
-        "id": "pageEstates",
-        "type": "ContentType",
-        "createdAt": "2020-03-04T13:05:47.216Z",
-        "updatedAt": "2020-03-04T13:05:50.823Z",
-        "environment": {
-          "sys": {
-            "id": "master",
-            "type": "Link",
-            "linkType": "Environment"
-          }
-        },
-        "publishedVersion": 1,
-        "publishedAt": "2020-03-04T13:05:50.823Z",
-        "firstPublishedAt": "2020-03-04T13:05:50.823Z",
-        "createdBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "4c7KTXqaAvJbDmWCbT4eJo"
-          }
-        },
-        "updatedBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "4c7KTXqaAvJbDmWCbT4eJo"
-          }
-        },
-        "publishedCounter": 1,
-        "version": 2,
-        "publishedBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "4c7KTXqaAvJbDmWCbT4eJo"
-          }
-        }
-      },
-      "displayField": "identifier",
-      "name": "Page > Estates",
-      "description": "An estates block of a page",
-      "fields": [
-        {
-          "id": "identifier",
-          "name": "Identifier",
-          "type": "Symbol",
-          "localized": false,
-          "required": true,
-          "validations": [
-            {
-              "unique": true
-            }
-          ],
-          "disabled": false,
-          "omitted": false
-        },
-        {
-          "id": "type",
-          "name": "Type",
-          "type": "Symbol",
-          "localized": false,
-          "required": false,
-          "validations": [],
-          "disabled": false,
-          "omitted": false
-        },
-        {
-          "id": "estates",
-          "name": "Estates",
-          "type": "Array",
-          "localized": false,
-          "required": false,
-          "validations": [],
-          "disabled": false,
-          "omitted": false,
-          "items": {
-            "type": "Link",
-            "validations": [
-              {
-                "linkContentType": ["estate"]
-              }
-            ],
-            "linkType": "Entry"
-          }
-        },
-        {
-          "id": "resources",
-          "name": "Resources",
-          "type": "Array",
-          "localized": false,
-          "required": false,
-          "validations": [],
-          "disabled": false,
-          "omitted": false,
-          "items": {
-            "type": "Link",
-            "validations": [
-              {
-                "linkContentType": ["resource"]
-              }
-            ],
-            "linkType": "Entry"
-          }
-        }
-      ]
-    },
-    {
-      "sys": {
-        "space": {
-          "sys": {
-            "type": "Link",
-            "linkType": "Space",
-            "id": "a7lxlrp123zx"
+            "id": "5e15uxftlyf2"
           }
         },
         "id": "estate",
         "type": "ContentType",
-        "createdAt": "2020-03-04T13:05:47.229Z",
-        "updatedAt": "2020-03-04T13:05:51.992Z",
+        "createdAt": "2020-05-21T05:21:32.866Z",
+        "updatedAt": "2020-05-21T16:37:48.112Z",
         "environment": {
           "sys": {
             "id": "master",
@@ -135,9 +20,9 @@
             "linkType": "Environment"
           }
         },
-        "publishedVersion": 1,
-        "publishedAt": "2020-03-04T13:05:51.992Z",
-        "firstPublishedAt": "2020-03-04T13:05:51.992Z",
+        "publishedVersion": 17,
+        "publishedAt": "2020-05-21T16:37:48.112Z",
+        "firstPublishedAt": "2020-05-21T05:21:37.098Z",
         "createdBy": {
           "sys": {
             "type": "Link",
@@ -152,8 +37,8 @@
             "id": "4c7KTXqaAvJbDmWCbT4eJo"
           }
         },
-        "publishedCounter": 1,
-        "version": 2,
+        "publishedCounter": 9,
+        "version": 18,
         "publishedBy": {
           "sys": {
             "type": "Link",
@@ -181,6 +66,30 @@
           "omitted": false
         },
         {
+          "id": "slug",
+          "name": "Slug",
+          "type": "Symbol",
+          "localized": true,
+          "required": true,
+          "validations": [
+            {
+              "unique": true
+            }
+          ],
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "autoSynced",
+          "name": "Auto synced",
+          "type": "Boolean",
+          "localized": false,
+          "required": false,
+          "validations": [],
+          "disabled": false,
+          "omitted": false
+        },
+        {
           "id": "archived",
           "name": "Archived",
           "type": "Boolean",
@@ -198,7 +107,7 @@
           "required": true,
           "validations": [
             {
-              "in": ["Rent", "Purchase"]
+              "in": ["Rent", "Purchase", "Purchase / Rent"]
             }
           ],
           "disabled": false,
@@ -303,21 +212,12 @@
         {
           "id": "specifications",
           "name": "Specifications",
-          "type": "Array",
-          "localized": false,
+          "type": "Object",
+          "localized": true,
           "required": false,
           "validations": [],
           "disabled": false,
-          "omitted": false,
-          "items": {
-            "type": "Link",
-            "validations": [
-              {
-                "linkContentType": ["estateResource"]
-              }
-            ],
-            "linkType": "Entry"
-          }
+          "omitted": false
         },
         {
           "id": "attachments",
@@ -346,13 +246,13 @@
           "sys": {
             "type": "Link",
             "linkType": "Space",
-            "id": "a7lxlrp123zx"
+            "id": "5e15uxftlyf2"
           }
         },
         "id": "estateResource",
         "type": "ContentType",
-        "createdAt": "2020-03-04T13:05:47.245Z",
-        "updatedAt": "2020-03-04T13:05:51.619Z",
+        "createdAt": "2020-05-21T05:21:32.870Z",
+        "updatedAt": "2020-05-21T05:21:36.815Z",
         "environment": {
           "sys": {
             "id": "master",
@@ -361,8 +261,8 @@
           }
         },
         "publishedVersion": 1,
-        "publishedAt": "2020-03-04T13:05:51.619Z",
-        "firstPublishedAt": "2020-03-04T13:05:51.619Z",
+        "publishedAt": "2020-05-21T05:21:36.815Z",
+        "firstPublishedAt": "2020-05-21T05:21:36.815Z",
         "createdBy": {
           "sys": {
             "type": "Link",
@@ -432,6 +332,121 @@
           "omitted": false
         }
       ]
+    },
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "5e15uxftlyf2"
+          }
+        },
+        "id": "pageEstates",
+        "type": "ContentType",
+        "createdAt": "2020-05-21T05:21:33.009Z",
+        "updatedAt": "2020-05-21T05:21:36.477Z",
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        },
+        "publishedVersion": 1,
+        "publishedAt": "2020-05-21T05:21:36.477Z",
+        "firstPublishedAt": "2020-05-21T05:21:36.477Z",
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "4c7KTXqaAvJbDmWCbT4eJo"
+          }
+        },
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "4c7KTXqaAvJbDmWCbT4eJo"
+          }
+        },
+        "publishedCounter": 1,
+        "version": 2,
+        "publishedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "4c7KTXqaAvJbDmWCbT4eJo"
+          }
+        }
+      },
+      "displayField": "identifier",
+      "name": "Page > Estates",
+      "description": "An estates block of a page",
+      "fields": [
+        {
+          "id": "identifier",
+          "name": "Identifier",
+          "type": "Symbol",
+          "localized": false,
+          "required": true,
+          "validations": [
+            {
+              "unique": true
+            }
+          ],
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "type",
+          "name": "Type",
+          "type": "Symbol",
+          "localized": false,
+          "required": false,
+          "validations": [],
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "estates",
+          "name": "Estates",
+          "type": "Array",
+          "localized": false,
+          "required": false,
+          "validations": [],
+          "disabled": false,
+          "omitted": false,
+          "items": {
+            "type": "Link",
+            "validations": [
+              {
+                "linkContentType": ["estate"]
+              }
+            ],
+            "linkType": "Entry"
+          }
+        },
+        {
+          "id": "resources",
+          "name": "Resources",
+          "type": "Array",
+          "localized": false,
+          "required": false,
+          "validations": [],
+          "disabled": false,
+          "omitted": false,
+          "items": {
+            "type": "Link",
+            "validations": [
+              {
+                "linkContentType": ["resource"]
+              }
+            ],
+            "linkType": "Entry"
+          }
+        }
+      ]
     }
   ],
   "editorInterfaces": [
@@ -441,13 +456,13 @@
         "type": "EditorInterface",
         "space": {
           "sys": {
-            "id": "a7lxlrp123zx",
+            "id": "5e15uxftlyf2",
             "type": "Link",
             "linkType": "Space"
           }
         },
-        "version": 2,
-        "createdAt": "2020-03-04T13:05:50.886Z",
+        "version": 18,
+        "createdAt": "2020-05-21T05:21:37.170Z",
         "createdBy": {
           "sys": {
             "id": "4c7KTXqaAvJbDmWCbT4eJo",
@@ -455,82 +470,7 @@
             "linkType": "User"
           }
         },
-        "updatedAt": "2020-03-04T13:05:52.726Z",
-        "updatedBy": {
-          "sys": {
-            "id": "4c7KTXqaAvJbDmWCbT4eJo",
-            "type": "Link",
-            "linkType": "User"
-          }
-        },
-        "contentType": {
-          "sys": {
-            "id": "pageEstates",
-            "type": "Link",
-            "linkType": "ContentType"
-          }
-        },
-        "environment": {
-          "sys": {
-            "id": "master",
-            "type": "Link",
-            "linkType": "Environment"
-          }
-        }
-      },
-      "controls": [
-        {
-          "fieldId": "identifier",
-          "widgetId": "singleLine",
-          "widgetNamespace": "builtin"
-        },
-        {
-          "fieldId": "type",
-          "settings": {
-            "helpText": "The type of the view"
-          },
-          "widgetId": "singleLine",
-          "widgetNamespace": "builtin"
-        },
-        {
-          "fieldId": "estates",
-          "settings": {
-            "bulkEditing": false
-          },
-          "widgetId": "entryLinksEditor",
-          "widgetNamespace": "builtin"
-        },
-        {
-          "fieldId": "resources",
-          "settings": {
-            "bulkEditing": false
-          },
-          "widgetId": "entryLinksEditor",
-          "widgetNamespace": "builtin"
-        }
-      ]
-    },
-    {
-      "sys": {
-        "id": "default",
-        "type": "EditorInterface",
-        "space": {
-          "sys": {
-            "id": "a7lxlrp123zx",
-            "type": "Link",
-            "linkType": "Space"
-          }
-        },
-        "version": 2,
-        "createdAt": "2020-03-04T13:05:52.064Z",
-        "createdBy": {
-          "sys": {
-            "id": "4c7KTXqaAvJbDmWCbT4eJo",
-            "type": "Link",
-            "linkType": "User"
-          }
-        },
-        "updatedAt": "2020-03-04T13:05:52.739Z",
+        "updatedAt": "2020-05-21T16:37:48.759Z",
         "updatedBy": {
           "sys": {
             "id": "4c7KTXqaAvJbDmWCbT4eJo",
@@ -557,6 +497,20 @@
         {
           "fieldId": "title",
           "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "slug",
+          "widgetId": "slugEditor",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "autoSynced",
+          "settings": {
+            "trueLabel": "Yes",
+            "falseLabel": "No"
+          },
+          "widgetId": "boolean",
           "widgetNamespace": "builtin"
         },
         {
@@ -618,12 +572,8 @@
         },
         {
           "fieldId": "specifications",
-          "settings": {
-            "helpText": "Specifications shown as table",
-            "bulkEditing": true
-          },
-          "widgetId": "entryCardsEditor",
-          "widgetNamespace": "builtin"
+          "widgetId": "contentful-json-table",
+          "widgetNamespace": "extension"
         },
         {
           "fieldId": "attachments",
@@ -641,13 +591,13 @@
         "type": "EditorInterface",
         "space": {
           "sys": {
-            "id": "a7lxlrp123zx",
+            "id": "5e15uxftlyf2",
             "type": "Link",
             "linkType": "Space"
           }
         },
         "version": 2,
-        "createdAt": "2020-03-04T13:05:51.683Z",
+        "createdAt": "2020-05-21T05:21:36.864Z",
         "createdBy": {
           "sys": {
             "id": "4c7KTXqaAvJbDmWCbT4eJo",
@@ -655,7 +605,7 @@
             "linkType": "User"
           }
         },
-        "updatedAt": "2020-03-04T13:05:52.727Z",
+        "updatedAt": "2020-05-21T05:21:37.648Z",
         "updatedBy": {
           "sys": {
             "id": "4c7KTXqaAvJbDmWCbT4eJo",
@@ -690,457 +640,81 @@
           "widgetNamespace": "builtin"
         }
       ]
-    }
-  ],
-  "entries": [
-    {
-      "sys": {
-        "space": {
-          "sys": {
-            "type": "Link",
-            "linkType": "Space",
-            "id": "a7lxlrp123zx"
-          }
-        },
-        "id": "3uyarSzMl3eyTth2caEBJF",
-        "type": "Entry",
-        "createdAt": "2020-03-04T13:06:01.565Z",
-        "updatedAt": "2020-03-04T13:07:04.159Z",
-        "environment": {
-          "sys": {
-            "id": "master",
-            "type": "Link",
-            "linkType": "Environment"
-          }
-        },
-        "publishedVersion": 2,
-        "publishedAt": "2020-03-04T13:07:04.159Z",
-        "firstPublishedAt": "2020-03-04T13:07:04.159Z",
-        "createdBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "4c7KTXqaAvJbDmWCbT4eJo"
-          }
-        },
-        "updatedBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "4c7KTXqaAvJbDmWCbT4eJo"
-          }
-        },
-        "publishedCounter": 1,
-        "version": 3,
-        "publishedBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "4c7KTXqaAvJbDmWCbT4eJo"
-          }
-        },
-        "contentType": {
-          "sys": {
-            "type": "Link",
-            "linkType": "ContentType",
-            "id": "pageEstates"
-          }
-        }
-      },
-      "fields": {
-        "identifier": {
-          "en-US": "[dummy] identifier"
-        },
-        "type": {
-          "en-US": "type"
-        },
-        "estates": {
-          "en-US": [
-            {
-              "sys": {
-                "type": "Link",
-                "linkType": "Entry",
-                "id": "182iGVpXM5dMdgarbHfLOk"
-              }
-            }
-          ]
-        }
-      }
     },
     {
       "sys": {
+        "id": "default",
+        "type": "EditorInterface",
         "space": {
           "sys": {
+            "id": "5e15uxftlyf2",
             "type": "Link",
-            "linkType": "Space",
-            "id": "a7lxlrp123zx"
+            "linkType": "Space"
           }
         },
-        "id": "182iGVpXM5dMdgarbHfLOk",
-        "type": "Entry",
-        "createdAt": "2020-03-04T13:06:03.324Z",
-        "updatedAt": "2020-03-04T13:06:48.211Z",
-        "environment": {
-          "sys": {
-            "id": "master",
-            "type": "Link",
-            "linkType": "Environment"
-          }
-        },
-        "publishedVersion": 3,
-        "publishedAt": "2020-03-04T13:06:48.211Z",
-        "firstPublishedAt": "2020-03-04T13:06:48.211Z",
-        "createdBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "4c7KTXqaAvJbDmWCbT4eJo"
-          }
-        },
-        "updatedBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "4c7KTXqaAvJbDmWCbT4eJo"
-          }
-        },
-        "publishedCounter": 1,
-        "version": 4,
-        "publishedBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "4c7KTXqaAvJbDmWCbT4eJo"
-          }
-        },
-        "contentType": {
-          "sys": {
-            "type": "Link",
-            "linkType": "ContentType",
-            "id": "estate"
-          }
-        }
-      },
-      "fields": {
-        "title": {
-          "en-US": "[dummy] title"
-        },
-        "archived": {
-          "en-US": true
-        },
-        "marketingType": {
-          "en-US": "Rent"
-        },
-        "estateType": {
-          "en-US": "estateType"
-        },
-        "price": {
-          "en-US": "1000 €"
-        },
-        "space": {
-          "en-US": "30 m²"
-        },
-        "url": {
-          "en-US": "https://hinterland.software"
-        },
-        "address": {
-          "en-US": {
-            "data": {},
-            "content": [
-              {
-                "data": {},
-                "content": [
-                  {
-                    "data": {},
-                    "marks": [],
-                    "value": "<street> <number>\n<postalcode> <city>\n<country>",
-                    "nodeType": "text"
-                  }
-                ],
-                "nodeType": "paragraph"
-              }
-            ],
-            "nodeType": "document"
-          }
-        },
-        "freeFormTexts": {
-          "en-US": [
-            {
-              "sys": {
-                "type": "Link",
-                "linkType": "Entry",
-                "id": "1j80y0cUJ4fwJCZKYUYguo"
-              }
-            }
-          ]
-        },
-        "specifications": {
-          "en-US": [
-            {
-              "sys": {
-                "type": "Link",
-                "linkType": "Entry",
-                "id": "1j80y0cUJ4fwJCZKYUYguo"
-              }
-            }
-          ]
-        },
-        "attachments": {
-          "en-US": [
-            {
-              "sys": {
-                "type": "Link",
-                "linkType": "Asset",
-                "id": "wgcXBjcJZmS6GWEcMsyKK"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "sys": {
-        "space": {
-          "sys": {
-            "type": "Link",
-            "linkType": "Space",
-            "id": "a7lxlrp123zx"
-          }
-        },
-        "id": "1j80y0cUJ4fwJCZKYUYguo",
-        "type": "Entry",
-        "createdAt": "2020-03-04T13:06:03.426Z",
-        "updatedAt": "2020-03-04T13:06:14.067Z",
-        "environment": {
-          "sys": {
-            "id": "master",
-            "type": "Link",
-            "linkType": "Environment"
-          }
-        },
-        "publishedVersion": 1,
-        "publishedAt": "2020-03-04T13:06:14.067Z",
-        "firstPublishedAt": "2020-03-04T13:06:14.067Z",
-        "createdBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "4c7KTXqaAvJbDmWCbT4eJo"
-          }
-        },
-        "updatedBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "4c7KTXqaAvJbDmWCbT4eJo"
-          }
-        },
-        "publishedCounter": 1,
         "version": 2,
-        "publishedBy": {
+        "createdAt": "2020-05-21T05:21:36.547Z",
+        "createdBy": {
           "sys": {
+            "id": "4c7KTXqaAvJbDmWCbT4eJo",
             "type": "Link",
-            "linkType": "User",
-            "id": "4c7KTXqaAvJbDmWCbT4eJo"
+            "linkType": "User"
+          }
+        },
+        "updatedAt": "2020-05-21T05:21:38.005Z",
+        "updatedBy": {
+          "sys": {
+            "id": "4c7KTXqaAvJbDmWCbT4eJo",
+            "type": "Link",
+            "linkType": "User"
           }
         },
         "contentType": {
           "sys": {
+            "id": "pageEstates",
             "type": "Link",
-            "linkType": "ContentType",
-            "id": "estateResource"
-          }
-        }
-      },
-      "fields": {
-        "key": {
-          "en-US": "[dummy] key"
-        },
-        "value": {
-          "en-US": {
-            "nodeType": "document",
-            "data": {},
-            "content": [
-              {
-                "nodeType": "paragraph",
-                "data": {},
-                "content": [
-                  {
-                    "nodeType": "text",
-                    "value": "value",
-                    "marks": [],
-                    "data": {}
-                  }
-                ]
-              }
-            ]
-          }
-        }
-      }
-    }
-  ],
-  "assets": [
-    {
-      "sys": {
-        "space": {
-          "sys": {
-            "type": "Link",
-            "linkType": "Space",
-            "id": "a7lxlrp123zx"
+            "linkType": "ContentType"
           }
         },
-        "id": "wgcXBjcJZmS6GWEcMsyKK",
-        "type": "Asset",
-        "createdAt": "2020-03-04T13:05:54.272Z",
-        "updatedAt": "2020-03-04T13:06:00.759Z",
         "environment": {
           "sys": {
             "id": "master",
             "type": "Link",
             "linkType": "Environment"
           }
-        },
-        "publishedVersion": 2,
-        "publishedAt": "2020-03-04T13:06:00.759Z",
-        "firstPublishedAt": "2020-03-04T13:06:00.759Z",
-        "createdBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "4c7KTXqaAvJbDmWCbT4eJo"
-          }
-        },
-        "updatedBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "4c7KTXqaAvJbDmWCbT4eJo"
-          }
-        },
-        "publishedCounter": 1,
-        "version": 3,
-        "publishedBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "4c7KTXqaAvJbDmWCbT4eJo"
-          }
         }
       },
-      "fields": {
-        "title": {
-          "en-US": "[dummy] title"
+      "controls": [
+        {
+          "fieldId": "identifier",
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
         },
-        "description": {
-          "en-US": "description"
+        {
+          "fieldId": "type",
+          "settings": {
+            "helpText": "The type of the view"
+          },
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
         },
-        "file": {
-          "en-US": {
-            "url": "//source.unsplash.com/800x800?real-estate",
-            "details": {
-              "size": 84330,
-              "image": {
-                "width": 800,
-                "height": 800
-              }
-            },
-            "fileName": "random-unsplash.jpg",
-            "contentType": "image/jpeg"
-          }
+        {
+          "fieldId": "estates",
+          "settings": {
+            "bulkEditing": false
+          },
+          "widgetId": "entryLinksEditor",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "resources",
+          "settings": {
+            "bulkEditing": false
+          },
+          "widgetId": "entryLinksEditor",
+          "widgetNamespace": "builtin"
         }
-      }
+      ]
     }
-  ],
-  "locales": [
-    {
-      "name": "English (United States)",
-      "code": "en-US",
-      "fallbackCode": null,
-      "default": true,
-      "contentManagementApi": true,
-      "contentDeliveryApi": true,
-      "optional": false,
-      "sys": {
-        "type": "Locale",
-        "id": "0C5ny37uejTQDPyVT0sASk",
-        "version": 1,
-        "space": {
-          "sys": {
-            "type": "Link",
-            "linkType": "Space",
-            "id": "a7lxlrp123zx"
-          }
-        },
-        "environment": {
-          "sys": {
-            "type": "Link",
-            "linkType": "Environment",
-            "id": "master"
-          }
-        },
-        "createdBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "4c7KTXqaAvJbDmWCbT4eJo"
-          }
-        },
-        "createdAt": "2020-03-04T13:00:42Z",
-        "updatedBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "4c7KTXqaAvJbDmWCbT4eJo"
-          }
-        },
-        "updatedAt": "2020-03-04T13:00:42Z"
-      }
-    },
-    {
-      "name": "German (Germany)",
-      "code": "de-DE",
-      "fallbackCode": "en-US",
-      "default": false,
-      "contentManagementApi": true,
-      "contentDeliveryApi": true,
-      "optional": true,
-      "sys": {
-        "type": "Locale",
-        "id": "67RM5qc6k8z4b6sMH2KJ5V",
-        "version": 1,
-        "space": {
-          "sys": {
-            "type": "Link",
-            "linkType": "Space",
-            "id": "a7lxlrp123zx"
-          }
-        },
-        "environment": {
-          "sys": {
-            "type": "Link",
-            "linkType": "Environment",
-            "id": "master"
-          }
-        },
-        "createdBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "4c7KTXqaAvJbDmWCbT4eJo"
-          }
-        },
-        "createdAt": "2020-03-04T13:05:46Z",
-        "updatedBy": {
-          "sys": {
-            "type": "Link",
-            "linkType": "User",
-            "id": "4c7KTXqaAvJbDmWCbT4eJo"
-          }
-        },
-        "updatedAt": "2020-03-04T13:05:46Z"
-      }
-    }
-  ],
-  "webhooks": [],
-  "roles": []
+  ]
 }
