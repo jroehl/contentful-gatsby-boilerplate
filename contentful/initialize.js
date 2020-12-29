@@ -2,7 +2,10 @@ const open = require('open');
 const contentfulImport = require('contentful-import');
 const { readFileSync, writeFileSync, existsSync } = require('fs');
 const { resolve } = require('path');
-const { createSpace } = require('./utils');
+const {
+  createSpace,
+  Logger
+} = require('./utils');
 const {
   getContentfulEnvironment,
   getBuildEnvironment,
@@ -23,11 +26,11 @@ const skipLocales = args.includes('--skip-locales');
 const init = async () => {
   const space = await createSpace(name, organizationId);
   const spaceId = space.sys.id;
-  console.log(`Created space "${spaceId}"`);
-  console.log(`Using environment "${environment}"`);
+  Logger.log(`Created space "${spaceId}"`);
+  Logger.log(`Using environment "${environment}"`);
 
   (skipContent || skipLocales) &&
-    console.log(
+    Logger.log(
       `Skipping import of content ${skipLocales ? 'and locales' : ''}`
     );
 
@@ -37,7 +40,7 @@ const init = async () => {
     'contentful-boilerplate-website.json'
   );
 
-  console.log(`Setting up "${spaceId}"`);
+  Logger.log(`Setting up "${spaceId}"`);
   await contentfulImport({
     environmentId: environment,
     contentFile,
@@ -62,13 +65,13 @@ const init = async () => {
   }
   writeFileSync(envFile, envLines.join('\n'));
 
-  console.log('Added environment variables to the .env file');
+  Logger.log('Added environment variables to the .env file');
 
   const spaceHomeURL = `https://app.contentful.com/spaces/${spaceId}/home`;
 
-  console.log(`Set up space: ${spaceHomeURL}`);
+  Logger.log(`Set up space: ${spaceHomeURL}`);
 
   await open(spaceHomeURL);
 };
 
-init().catch(console.error);
+init().catch(Logger.error);

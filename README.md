@@ -24,7 +24,6 @@ The build process creates following files:
 
 - `_redirects` file for Netlify with SPA redirects for the dynamic version or default redirects for the static version
 - `robots.txt` file to allow or disallow crawling of the website -depending on the `NODE_ENV/BUILD_ENV`
-- `sitemap.xml` file to have a reference for all created pages
 
 ## Setup
 
