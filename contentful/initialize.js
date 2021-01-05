@@ -2,14 +2,12 @@ const open = require('open');
 const contentfulImport = require('contentful-import');
 const { readFileSync, writeFileSync, existsSync } = require('fs');
 const { resolve } = require('path');
-const {
-  createSpace,
-  Logger
-} = require('./utils');
+const { createSpace } = require('./utils');
 const {
   getContentfulEnvironment,
   getBuildEnvironment,
-} = require('../shared/utils');
+  Logger,
+} = require('../gatsby/utils');
 
 const {
   environment,
@@ -24,7 +22,7 @@ const skipContent = args.includes('--skip-content');
 const skipLocales = args.includes('--skip-locales');
 
 const init = async () => {
-  const space = await createSpace(name, organizationId);
+  const space = await createSpace('Webseite', organizationId);
   const spaceId = space.sys.id;
   Logger.log(`Created space "${spaceId}"`);
   Logger.log(`Using environment "${environment}"`);

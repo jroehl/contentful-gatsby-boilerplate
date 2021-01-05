@@ -110,5 +110,4 @@ module.exports = {
   getCdaClient,
   getCmaClient,
   getPreviewClient,
-  Logger
 };

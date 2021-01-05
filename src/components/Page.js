@@ -1,40 +1,37 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-import Layout from './Layout';
-import PageContentRouter from './PageContentRouter';
-import * as shapes from './proptypes';
+import { Layout } from './Layout';
+import { RichText } from './RichText';
+import { PageNavigation } from './PageNavigation';
+import { PageFooter } from './PageFooter';
 
-const Page = (props) => {
+export const Page = (props) => {
   const {
-    data: { page },
-    pageContext: { config },
+    data: { page, site, pages },
+    pageContext: { node_locale },
+    location,
   } = props;
 
-  const { pageContent, metadata, ...restData } = page;
+  const { content, metadata, contentful_id, resources } = page;
+
+  const config = {
+    ...site.siteMetadata,
+    locale: node_locale,
+    location,
+    contentful_id,
+  };
+
+  console.log(props);
 
   return (
     <Layout config={config} metadata={metadata}>
-      {pageContent.map(({ __typename, ...content }, i) => {
-        return (
-          <PageContentRouter
-            {...content}
-            key={`${__typename}_${i}`}
-            typename={__typename}
-            pageContext={restData}
-            config={config}
-          />
-        );
-      })}
+      <PageNavigation
+        pages={pages.nodes}
+        config={config}
+        resources={resources}
+      />
+      <RichText content={content} />
+      <PageFooter pages={pages.nodes} config={config} resources={resources} />
     </Layout>
   );
 };
-
-Page.propTypes = {
-  pageContext: shapes.pageContext,
-  data: PropTypes.shape({
-    page: shapes.page.isRequired,
-  }),
-};
-
-export default Page;

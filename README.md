@@ -10,7 +10,6 @@
     - [Tear down website space](#tear-down-website-space)
   - [Develop and build](#develop-and-build)
     - [Static](#static)
-    - [Dynamic](#dynamic)
 
 ## About
 
@@ -18,11 +17,11 @@ This is a PoC of a [Contentful](https://www.contentful.com/) [Gatsby](https://ww
 
 It simplifies the base setup, by supplying scripts to set up a localized gatsby/contentful website.
 
-The site can be deployed statically with Gatsby or using `BUILD_ENV="preview"` dynamically. When set up as "preview", the build process uses a small statically generated adapter to handle routing and fetch all data from Contentful dynamically on the client.
+The site can be deployed statically with Gatsby.
 
 The build process creates following files:
 
-- `_redirects` file for Netlify with SPA redirects for the dynamic version or default redirects for the static version
+- `_redirects` file for Netlify with default redirects for the static version
 - `robots.txt` file to allow or disallow crawling of the website -depending on the `NODE_ENV/BUILD_ENV`
 
 ## Setup
@@ -59,24 +58,7 @@ export CONTENTFUL_SPACE_ID="<space_id>"
 export CONTENTFUL_PREVIEW_TOKEN="<delivery_token>"
 
 npm install
-npm run start:static # or npm run build:static
+npm run start # or npm run build
 ```
 
 [Example](https://contentful-gatsby-boilerplate.netlify.app/) of a static version deployed using [Netlify](https://www.netlify.com/).
-
-### Dynamic
-
-This creates a dynamic version of the website that uses the [Contentful Preview API](https://www.contentful.com/developers/docs/references/content-preview-api/) to fetch data from Contentful dynamically on every load.
-
-```bash
-# Needs "CONTENTFUL_SPACE_ID" and "CONTENTFUL_PREVIEW_TOKEN" added to environment variables (or .env file)
-export CONTENTFUL_SPACE_ID="<space_id>"
-export CONTENTFUL_PREVIEW_TOKEN="<preview_token>"
-
-npm install
-npm run start:dynamic # or npm run build:dynamic
-```
-
-The dynamic version uses the [Contentful Sync API](https://www.contentful.com/developers/docs/concepts/sync/) to refresh the page in the background (every 10 seconds) and rerenders on changes in the content provided by Contentful.
-
-[Example](https://preview--contentful-gatsby-boilerplate.netlify.app/) of a dynamic version deployed using [Netlify](https://www.netlify.com/).

@@ -1,11 +1,10 @@
 import React from 'react';
 
 import { renderRoutesRecursively, translate } from '../utils';
-import RichText from './RichText';
-import * as shapes from './proptypes';
+import { RichText } from './RichText';
 
-const PageFooter = (props) => {
-  const { resources, config, pages } = props;
+export const PageFooter = (props) => {
+  const { resources, pages, config } = props;
 
   const company = translate(resources, 'footer.company');
   const email = translate(resources, 'footer.email');
@@ -13,20 +12,10 @@ const PageFooter = (props) => {
   return (
     <footer>
       <div>
-        <RichText config={config} json={company && company.json} />
-        <RichText config={config} json={email && email.json} />
+        <RichText content={company} />
+        <RichText content={email} />
       </div>
-      <div>{renderRoutesRecursively(pages)}</div>
+      <div>{renderRoutesRecursively(pages, config.locale, 'showInFooter')}</div>
     </footer>
   );
 };
-
-PageFooter.propTypes = {
-  pages: shapes.pages.isRequired,
-  resources: shapes.resources,
-  config: shapes.config,
-};
-
-PageFooter.defaultProps = {};
-
-export default PageFooter;

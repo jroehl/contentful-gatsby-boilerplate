@@ -1,16 +1,18 @@
 import React, { useEffect, Fragment } from 'react';
-import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
-import * as shapes from './proptypes';
 
 import '../index.css';
 
-const Layout = ({ children, config, metadata: { title, description } }) => {
+export const Layout = ({
+  children,
+  config,
+  metadata: { title, description },
+}) => {
   const {
-    path,
+    location: { pathname },
     env,
     domain,
-    localization: { locale },
+    locale,
   } = config;
   const isProduction = env === 'production';
 
@@ -21,12 +23,12 @@ const Layout = ({ children, config, metadata: { title, description } }) => {
       // disable console.info
       console.info = () => {};
     }
-  }, [isProduction, path]);
+  }, [isProduction, pathname]);
 
   return (
     <Fragment>
       <Helmet>
-        <html lang={locale.code} />
+        <html lang={locale} />
         <title>{title}</title>
         <link
           rel="icon"
@@ -50,7 +52,7 @@ const Layout = ({ children, config, metadata: { title, description } }) => {
         <meta property="og:type" content="website" />
         <meta property="og:title" content={title} />
         <meta property="og:site_name" content={title} />
-        <meta property="og:url" content={path} />
+        <meta property="og:url" content={pathname} />
         <meta property="og:image" content={`${domain}/logo.png`} />
         <link
           rel="stylesheet"
@@ -63,13 +65,3 @@ const Layout = ({ children, config, metadata: { title, description } }) => {
     </Fragment>
   );
 };
-
-Layout.propTypes = {
-  metadata: shapes.metadata,
-  config: shapes.config,
-  children: PropTypes.node,
-};
-
-Layout.defaultProps = {};
-
-export default Layout;

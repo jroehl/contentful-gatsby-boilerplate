@@ -1,4 +1,7 @@
-const { getContentfulEnvironment } = require('./gatsby/utils');
+const {
+  getContentfulEnvironment,
+  getBuildEnvironment,
+} = require('./gatsby/utils');
 
 const {
   environment,
@@ -29,5 +32,8 @@ const plugins = [
 ];
 
 module.exports = {
+  siteMetadata: {
+    ...getBuildEnvironment(),
+  },
   plugins,
 };

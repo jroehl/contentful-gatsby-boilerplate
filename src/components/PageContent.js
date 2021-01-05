@@ -1,22 +1,12 @@
 import React from 'react';
 
-import RichText from './RichText';
-import * as shapes from './proptypes';
+import { RichText } from './RichText';
 
-const PageContent = (props) => {
-  const { content, config } = props;
+export const PageContent = (props) => {
+  const { content } = props;
   return (
     <section>
-      <RichText config={config} json={content && content.json} />
+      <RichText content={content} />
     </section>
   );
 };
-
-PageContent.propTypes = {
-  content: shapes.richTextJson,
-  config: shapes.config,
-};
-
-PageContent.defaultProps = {};
-
-export default PageContent;

@@ -1,52 +1,41 @@
 import React from 'react';
 import { navigate } from 'gatsby';
 
-import { renderRoutesRecursively, translate } from '../utils';
-import RichText from './RichText';
-import * as shapes from './proptypes';
+import {
+  renderRoutesRecursively,
+  translate,
+  buildPageTreeAndLocales,
+} from '../utils';
+import { RichText } from './RichText';
 
 import styles from './PageNavigation.module.css';
 
-const PageNavigation = (props) => {
+export const PageNavigation = (props) => {
   const { pages, resources, config } = props;
 
-  const {
-    localization: { locale, locales },
-  } = config;
+  const { tree, locales } = buildPageTreeAndLocales(pages);
+
+  const { locale, contentful_id } = config;
 
   const translateRoute = () => {
     if (locales.length <= 1) {
       alert('No additional locale defined in Contentful');
       return;
     }
-    const { code: nextLocale } = locales.find(
-      (loc) => loc.code !== locale.code
-    );
+    const nextLocale = locales.find((loc) => loc !== locale);
+    const { path } = tree[contentful_id][nextLocale];
     console.log(locales, locale);
-    console.log({ nextLocale, path: locale.localizedPaths[nextLocale] });
-    navigate(locale.localizedPaths[nextLocale]);
+    console.log({ nextLocale, path });
+    navigate(path);
   };
 
   const translateButton = translate(resources, 'navigation.translate');
   return (
     <nav className={styles.nav}>
-      <div>{renderRoutesRecursively(pages)}</div>
+      <div>{renderRoutesRecursively(pages, locale, 'showInNavigation')}</div>
       <button onClick={translateRoute} className="button-primary">
-        <RichText
-          config={config}
-          json={translateButton && translateButton.json}
-        />
+        <RichText content={translateButton} />
       </button>
     </nav>
   );
 };
-
-PageNavigation.propTypes = {
-  pages: shapes.pages.isRequired,
-  resources: shapes.resources,
-  config: shapes.config,
-};
-
-PageNavigation.defaultProps = {};
-
-export default PageNavigation;
