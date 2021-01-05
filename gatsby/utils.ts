@@ -1,10 +1,11 @@
-const toCamelCase = require('lodash.camelcase');
-const { resolve } = require('path');
-const { writeFileSync, existsSync, mkdirSync, readFileSync } = require('fs');
+import toCamelCase from 'lodash/camelcase';
+import { resolve } from 'path';
+import { writeFileSync, existsSync, mkdirSync, readFileSync } from 'fs';
+import dotenv from 'dotenv';
 
 const CF_PREFIX = 'CONTENTFUL_';
 
-const appendWriteFileSync = (path, content) => {
+export const appendWriteFileSync = (path: string, content: string) => {
   const exists = existsSync(path);
   let enrichedContent = '';
   if (exists) {
@@ -15,20 +16,29 @@ const appendWriteFileSync = (path, content) => {
   writeFileSync(path, enrichedContent);
 };
 
-const getPublicDirIfNotExists = () => {
+export const getPublicDirIfNotExists = () => {
   const dir = resolve(__dirname, '..', 'public');
   if (!existsSync(dir)) mkdirSync(dir);
   return dir;
 };
 
-class RedirectParser {
-  constructor(fileName = '_redirects') {
+export class RedirectParser {
+  private redirects: {
+    from: string;
+    to: string;
+    query: string;
+    status: number;
+    force: '!' | '';
+    trailing: string;
+  }[];
+  private publicDir: string;
+
+  constructor(private fileName = '_redirects') {
     this.redirects = [];
-    this.fileName = fileName;
     this.publicDir = getPublicDirIfNotExists();
   }
 
-  parseQuery(query) {
+  parseQuery(query?: Array<unknown> | Record<string, unknown>): string {
     if (!query) return '';
     if (Array.isArray(query)) {
       return query.map((key) => `${key}=:${key}`).join(' ');
@@ -38,7 +48,20 @@ class RedirectParser {
       .join(' ');
   }
 
-  addRedirect(redirect = {}) {
+  addRedirect(
+    redirect: {
+      from?: string;
+      fromPath?: string;
+      to?: string;
+      toPath?: string;
+      isPermanent?: boolean;
+      status?: number;
+      statusCode?: number;
+      force?: boolean;
+      query?: Array<unknown> | Record<string, unknown>;
+      trailing?: string;
+    } = {}
+  ) {
     const from = redirect.from || redirect.fromPath;
     const to = redirect.to || redirect.toPath;
     const status = redirect.isPermanent
@@ -78,7 +101,7 @@ class RedirectParser {
   }
 }
 
-const writeRobots = (env) => {
+export const writeRobots = (env: 'production' | 'development') => {
   const publicDir = getPublicDirIfNotExists();
   const isProduction = env === 'production';
   const robots = isProduction
@@ -89,22 +112,22 @@ const writeRobots = (env) => {
 };
 
 class Logger {
-  static log(...args) {
+  static log(...args: Array<unknown>) {
     console.log(...args);
   }
-  static warn(...args) {
+  static warn(...args: Array<unknown>) {
     console.warn(...args);
   }
-  static info(...args) {
+  static info(...args: Array<unknown>) {
     console.info(...args);
   }
-  static error(...args) {
+  static error(...args: Array<unknown>) {
     console.error(...args);
   }
 }
 
-const getBuildEnvironment = () => {
-  require('dotenv').config();
+export const getBuildEnvironment = () => {
+  dotenv.config();
   const {
     NODE_ENV = 'development',
     BUILD_ENV,
@@ -119,17 +142,17 @@ const getBuildEnvironment = () => {
   };
 };
 
-const defaults = {
+const defaults: Record<string, string> = {
   environment: 'master',
   host: 'cdn.contentful.com',
 };
 
-const getContentfulEnvironment = () => {
-  require('dotenv').config();
+export const getContentfulEnvironment = () => {
+  dotenv.config();
   const config = Object.entries(process.env).reduce((acc, [key, value]) => {
     if (!key.match(new RegExp(`^${CF_PREFIX}.*`))) return acc;
     const sanitizedKey = toCamelCase(key.replace(CF_PREFIX, ''));
-    const sanitizedValue = value === undefined ? defaults[sanitizedKey] : value;
+    const sanitizedValue: string | undefined = value ?? defaults[sanitizedKey];
 
     return {
       ...acc,
@@ -137,12 +160,4 @@ const getContentfulEnvironment = () => {
     };
   }, defaults);
   return config;
-};
-
-module.exports = {
-  Logger,
-  getBuildEnvironment,
-  getContentfulEnvironment,
-  writeRobots,
-  RedirectParser,
 };

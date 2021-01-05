@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { graphql } from 'gatsby';
 import { Page } from '../../components/Page';
 
-export default (props) => <Page {...props} />;
+const Component: FunctionComponent<any> = (props) => <Page {...props} />;
+export default Component;
 
 // This is the page query that connects the data to the actual component. Here you can query for any and all fields
 // you need access to within your code. Again, since Gatsby always queries for `id` in the collection, you can use that
@@ -35,8 +36,6 @@ export const query = graphql`
     page: contentfulPage(id: { eq: $id }) {
       contentful_id
       title
-      showInNavigation
-      showInFooter
       metadata {
         title
         description

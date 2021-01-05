@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { navigate } from 'gatsby';
 
 import {
@@ -7,10 +7,15 @@ import {
   buildPageTreeAndLocales,
 } from '../utils';
 import { RichText } from './RichText';
+import { Config, PageRoute, Resource } from '../types';
 
 import styles from './PageNavigation.module.css';
 
-export const PageNavigation = (props) => {
+export const PageNavigation: FunctionComponent<{
+  resources?: Array<Resource>;
+  pages: Array<PageRoute>;
+  config: Config;
+}> = (props) => {
   const { pages, resources, config } = props;
 
   const { tree, locales } = buildPageTreeAndLocales(pages);
@@ -22,7 +27,8 @@ export const PageNavigation = (props) => {
       alert('No additional locale defined in Contentful');
       return;
     }
-    const nextLocale = locales.find((loc) => loc !== locale);
+    const nextLocale =
+      locales.find((loc) => loc !== locale) || config.redirectDefaultPrefix;
     const { path } = tree[contentful_id][nextLocale];
     console.log(locales, locale);
     console.log({ nextLocale, path });

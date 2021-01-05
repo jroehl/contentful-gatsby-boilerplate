@@ -1,19 +1,20 @@
-import React, { useEffect, Fragment } from 'react';
+import React, { useEffect, Fragment, FunctionComponent } from 'react';
 import { Helmet } from 'react-helmet';
 
 import '../index.css';
+import { Metadata, Config } from '../types';
 
-export const Layout = ({
-  children,
-  config,
-  metadata: { title, description },
-}) => {
+export const Layout: FunctionComponent<{
+  config: Config;
+  metadata: Metadata;
+}> = ({ children, config, metadata: { title, description } }) => {
   const {
     location: { pathname },
     env,
     domain,
     locale,
   } = config;
+
   const isProduction = env === 'production';
 
   useEffect(() => {
@@ -58,7 +59,7 @@ export const Layout = ({
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css"
           integrity="sha256-2YQRJMXD7pIAPHiXr0s+vlRWA7GYJEK0ARns7k2sbHY="
-          crossorigin="anonymous"
+          crossOrigin="anonymous"
         />
       </Helmet>
       <main>{children}</main>
