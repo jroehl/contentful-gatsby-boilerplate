@@ -1,17 +1,20 @@
-import React, { useEffect, Fragment } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, Fragment, FunctionComponent } from 'react';
 import { Helmet } from 'react-helmet';
-import * as shapes from './proptypes';
 
 import '../index.css';
+import { Metadata, Config } from '../types';
 
-const Layout = ({ children, config, metadata: { title, description } }) => {
+export const Layout: FunctionComponent<{
+  config: Config;
+  metadata: Metadata;
+}> = ({ children, config, metadata: { title, description } }) => {
   const {
-    path,
+    location: { pathname },
     env,
     domain,
-    localization: { locale },
+    locale,
   } = config;
+
   const isProduction = env === 'production';
 
   useEffect(() => {
@@ -21,12 +24,12 @@ const Layout = ({ children, config, metadata: { title, description } }) => {
       // disable console.info
       console.info = () => {};
     }
-  }, [isProduction, path]);
+  }, [isProduction, pathname]);
 
   return (
     <Fragment>
       <Helmet>
-        <html lang={locale.code} />
+        <html lang={locale} />
         <title>{title}</title>
         <link
           rel="icon"
@@ -50,26 +53,16 @@ const Layout = ({ children, config, metadata: { title, description } }) => {
         <meta property="og:type" content="website" />
         <meta property="og:title" content={title} />
         <meta property="og:site_name" content={title} />
-        <meta property="og:url" content={path} />
+        <meta property="og:url" content={pathname} />
         <meta property="og:image" content={`${domain}/logo.png`} />
         <link
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css"
           integrity="sha256-2YQRJMXD7pIAPHiXr0s+vlRWA7GYJEK0ARns7k2sbHY="
-          crossorigin="anonymous"
+          crossOrigin="anonymous"
         />
       </Helmet>
       <main>{children}</main>
     </Fragment>
   );
 };
-
-Layout.propTypes = {
-  metadata: shapes.metadata,
-  config: shapes.config,
-  children: PropTypes.node,
-};
-
-Layout.defaultProps = {};
-
-export default Layout;

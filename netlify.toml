@@ -28,3 +28,9 @@
 # repository branch will inherit these settings.
 [context.production]
   environment = { BUILD_ENV = "production" }
+
+[[plugins]]
+  package = "@netlify/plugin-sitemap"
+
+[[plugins]]
+  package = "netlify-plugin-gatsby-cache"

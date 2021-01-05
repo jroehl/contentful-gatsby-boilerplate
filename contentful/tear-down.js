@@ -2,6 +2,7 @@ const contentful = require('contentful-management');
 const { readFileSync, writeFileSync, existsSync } = require('fs');
 const { resolve } = require('path');
 const { getContentfulEnvironment } = require('../shared/utils');
+const { Logger } = require('./utils');
 
 const { spaceId, managementToken } = getContentfulEnvironment();
 
@@ -9,7 +10,7 @@ const init = async () => {
   const client = contentful.createClient({ accessToken: managementToken });
 
   const space = await client.getSpace(spaceId);
-  console.log(`Deleting space "${space.sys.id}"`);
+  Logger.log(`Deleting space "${space.sys.id}"`);
 
   const apiKeys = await space.getApiKeys();
   await space.delete();
@@ -31,7 +32,7 @@ const init = async () => {
     writeFileSync(envFile, content);
   }
 
-  console.log(`Deleted space "${space.sys.id}"`);
+  Logger.log(`Deleted space "${space.sys.id}"`);
 };
 
-init().catch(console.error);
+init().catch(Logger.error);
